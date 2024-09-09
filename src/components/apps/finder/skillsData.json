@@ -1,0 +1,282 @@
+[
+  {
+    "name": "python",
+    "displayName": "Python",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+    "link": "https://www.python.org/"
+  },
+  {
+    "name": "go",
+    "displayName": "Go",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",
+    "link": "https://golang.org/"
+  },
+  {
+    "name": "typescript",
+    "displayName": "TypeScript",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
+    "link": "https://www.typescriptlang.org/"
+  },
+  {
+    "name": "javascript",
+    "displayName": "JavaScript",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
+    "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+  },
+  {
+    "name": "c++",
+    "displayName": "C++",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
+    "link": "https://www.cplusplus.com/"
+  },
+  {
+    "name": "c",
+    "displayName": "C",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg",
+    "link": "https://www.learn-c.org/"
+  },
+  {
+    "name": "java",
+    "displayName": "Java",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
+    "link": "https://www.java.com/"
+  },
+  {
+    "name": "html",
+    "displayName": "HTML",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
+    "link": "https://developer.mozilla.org/en-US/docs/Web/HTML"
+  },
+  {
+    "name": "css",
+    "displayName": "CSS",
+    "category": "Programming Languages",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
+    "link": "https://developer.mozilla.org/en-US/docs/Web/CSS"
+  },
+  {
+    "name": "django",
+    "displayName": "Django",
+    "category": "Frameworks and Libraries",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg",
+    "link": "https://www.djangoproject.com/"
+  },
+  {
+    "name": "django-rest-framework",
+    "displayName": "Django Rest Framework",
+    "category": "Frameworks and Libraries",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/djangorest/djangorest-original-wordmark.svg",
+    "link": "https://www.django-rest-framework.org/"
+  },
+  {
+    "name": "fastapi",
+    "displayName": "FastAPI",
+    "category": "Frameworks and Libraries",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg",
+    "link": "https://fastapi.tiangolo.com/"
+  },
+  {
+    "name": "fiber",
+    "displayName": "Fiber",
+    "category": "Frameworks and Libraries",
+    "icon": "/icons/skills/fiber.svg",
+    "link": "https://gofiber.io/"
+  },
+  {
+    "name": "gin",
+    "displayName": "Gin",
+    "category": "Frameworks and Libraries",
+    "icon": "/icons/skills/gin.svg",
+    "link": "https://gin-gonic.com/"
+  },
+  {
+    "name": "echo",
+    "displayName": "Echo",
+    "category": "Frameworks and Libraries",
+    "icon": "/icons/skills/echo.svg",
+    "link": "https://echo.labstack.com/"
+  },
+  {
+    "name": "express",
+    "displayName": "Express",
+    "category": "Frameworks and Libraries",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg",
+    "link": "https://expressjs.com/"
+  },
+  {
+    "name": "react",
+    "displayName": "React",
+    "category": "Frameworks and Libraries",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+    "link": "https://reactjs.org/"
+  },
+  {
+    "name": "next",
+    "displayName": "Next",
+    "category": "Frameworks and Libraries",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
+    "link": "https://nextjs.org/"
+  },
+  {
+    "name": "numpy",
+    "displayName": "Numpy",
+    "category": "Frameworks and Libraries",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg",
+    "link": "https://numpy.org/"
+  },
+  {
+    "name": "pandas",
+    "displayName": "Pandas",
+    "category": "Frameworks and Libraries",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg",
+    "link": "https://pandas.pydata.org/"
+  },
+  {
+    "name": "postgresql",
+    "displayName": "PostgreSQL",
+    "category": "Databases",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
+    "link": "https://www.postgresql.org/"
+  },
+  {
+    "name": "mysql",
+    "displayName": "MySQL",
+    "category": "Databases",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
+    "link": "https://www.mysql.com/"
+  },
+  {
+    "name": "sqlite",
+    "displayName": "SQLite",
+    "category": "Databases",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg",
+    "link": "https://www.sqlite.org/index.html"
+  },
+  {
+    "name": "mongodb",
+    "displayName": "MongoDB",
+    "category": "Databases",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg",
+    "link": "https://www.mongodb.com/"
+  },
+  {
+    "name": "redis",
+    "displayName": "Redis",
+    "category": "Databases",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg",
+    "link": "https://redis.io/"
+  },
+  {
+    "name": "aws",
+    "displayName": "Amazon Web Services",
+    "category": "Cloud Providers",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+    "link": "https://aws.amazon.com/"
+  },
+  {
+    "name": "azure",
+    "displayName": "Azure",
+    "category": "Cloud Providers",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg",
+    "link": "https://azure.microsoft.com/"
+  },
+  {
+    "name": "digitalocean",
+    "displayName": "Digital Ocean",
+    "category": "Cloud Providers",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/digitalocean/digitalocean-original.svg",
+    "link": "https://www.digitalocean.com/"
+  },
+  {
+    "name": "oraclecloud",
+    "displayName": "Oracle Cloud",
+    "category": "Cloud Providers",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oracle/oracle-original.svg",
+    "link": "https://www.oracle.com/cloud/"
+  },
+  {
+    "name": "googlecloudplatform",
+    "displayName": "Google Cloud Platform",
+    "category": "Cloud Providers",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg",
+    "link": "https://cloud.google.com/"
+  },
+  {
+    "name": "git",
+    "displayName": "Git",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
+    "link": "https://git-scm.com/"
+  },
+  {
+    "name": "github",
+    "displayName": "Github",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+    "link": "https://github.com/Dhruv9449"
+  },
+  {
+    "name": "docker",
+    "displayName": "Docker",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
+    "link": "https://www.docker.com/"
+  },
+  {
+    "name": "kubernetes",
+    "displayName": "Kubernetes",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg",
+    "link": "https://kubernetes.io/"
+  },
+  {
+    "name": "linux",
+    "displayName": "Linux",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg",
+    "link": "https://www.linux.org/"
+  },
+  {
+    "name": "googleapis",
+    "displayName": "Google APIs",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg",
+    "link": "https://developers.google.com/"
+  },
+  {
+    "name": "openaiapi",
+    "displayName": "OpenAI API",
+    "category": "Tools and Services",
+    "icon": "https://www.svgrepo.com/show/306500/openai.svg",
+    "link": "https://www.openai.com/"
+  },
+  {
+    "name": "npm",
+    "displayName": "NPM",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/npm/npm-original-wordmark.svg",
+    "link": "https://www.npmjs.com/"
+  },
+  {
+    "name": "yarn",
+    "displayName": "Yarn",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/yarn/yarn-original.svg",
+    "link": "https://yarnpkg.com/"
+  },
+  {
+    "name": "bash",
+    "displayName": "Bash",
+    "category": "Tools and Services",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg",
+    "link": "https://www.gnu.org/software/bash/"
+  }
+]

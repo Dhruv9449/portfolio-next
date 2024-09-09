@@ -1,0 +1,64 @@
+.window {
+    position: relative;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .windowContentWrapper {
+    display: flex;
+    flex-direction: column;
+    text-wrap: wrap;
+  }
+  
+  .windowHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #262626e6;
+    cursor: grab;
+  }
+  
+  .windowButtons {
+    display: flex;
+    gap: 6px;
+  }
+  
+  .closeButton,
+  .minimizeButton,
+  .maximizeButton {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .closeButton {
+    background-color: #ff5f57;
+  }
+  
+  .minimizeButton {
+    background-color: #ffbd2e;
+  }
+  
+  .maximizeButton {
+    background-color: #28c840;
+  }
+  
+  .windowTitle {
+    font-weight: 500;
+    flex-grow: 1;
+    text-align: center;
+    user-select: none;
+  }
+
+  .windowContent {
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    background-color: none;
+    color: white;
+  }

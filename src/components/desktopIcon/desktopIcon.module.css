@@ -1,0 +1,41 @@
+.desktopIconWrapper:hover {
+  transform: None;
+}
+
+.desktopIcon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    user-select: none; /* Prevent text selection */
+    transition: transform 0.1s ease, opacity 0.1s ease;
+    position: sticky; /* Position icons relative to parent */
+  }
+  
+  .icon {
+    width: 64px; /* Adjust icon size */
+    height: 64px; /* Adjust icon size */
+    pointer-events: none; /* Prevent image from being selected separately */
+  }
+  
+  .desktopIcon:hover {
+    opacity: 0.9; /* Subtle hover effect */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  .desktopIcon:active {
+    opacity: 0.8; /* Further reduce opacity on click */
+    transform: scale(0.98); /* Slightly reduce size on click for feedback */
+  }
+  
+  .label {
+    margin-top: 5px; /* Space between icon and label */
+    font-size: 12px; /* Adjust label font size */
+    color: white; /* Label text color */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7); /* Stronger shadow for better readability */
+    font-weight: 500; /* Adjust font weight */
+    text-align: center; /* Center text under icon */
+    pointer-events: none; /* Prevent label from being selected separately */
+  }
+  

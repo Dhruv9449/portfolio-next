@@ -1,0 +1,59 @@
+.dock {
+    display: flex;
+    justify-content: center; /* Center the icons */
+    align-items: flex-end; /* Align items at the bottom */
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background for the frosted effect */
+    backdrop-filter: blur(20px) brightness(0.9); /* Strong blur and slight brightness */
+    border-top: 1px solid rgba(255, 255, 255, 0.5); /* More visible top border */
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.241); /* Enhanced shadow for depth */
+    padding: 5px; /* Padding inside the dock */
+    position: fixed; /* Fixed position at the bottom */
+    bottom: 0;
+    left: 50%; /* Center the dock */
+    transform: translateX(-50%); /* Offset to center it */
+    z-index: 100; /* Ensure it's on top */
+    border-radius: 20px; /* Round the corners of the dock */
+  }
+  
+  .dock-icon {
+    display: flex;
+    flex-direction: column; /* Align icons vertically for tooltips */
+    align-items: center; /* Center the icon */
+    margin: 0 5px; /* Space between icons */
+    cursor: pointer; /* Change cursor on hover */
+    position: relative; /* Position for tooltip */
+    z-index: 2; /* Ensure icon is above the dock background */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .dock-icon:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+  }
+  
+  .icon-image {
+    width: 58px; /* Size of the icon */
+    height: 58px; /* Size of the icon */
+    object-fit: contain; /* Maintain aspect ratio */
+  }
+  
+  .tooltip {
+    position: absolute; /* Position relative to icon */
+    bottom: 70px; /* Position above the icon */
+    left: 50%; /* Center the tooltip */
+    transform: translateX(-50%); /* Offset to center it */
+    background-color: rgba(47, 47, 47, 0.662); /* Semi-transparent background */
+    color: white; /* Text color */
+    padding: 5px 10px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    white-space: nowrap; /* Prevent text wrapping */
+    visibility: hidden; /* Initially hidden */
+    opacity: 0; /* Initial opacity */
+    transition: opacity 0.3s; /* Smooth fade */
+  }
+  
+  .dock-icon:hover .tooltip {
+    visibility: visible; /* Show on hover */
+    opacity: 1; /* Fade in */
+  }
+  

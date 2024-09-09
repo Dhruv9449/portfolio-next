@@ -1,0 +1,12 @@
+[
+  {
+    "name": "balkanid",
+    "displayName": "BalkanID",
+    "icon": "/icons/experience/balkanid.png"
+  },
+  {
+    "name": "fischerjordan",
+    "displayName": "FischerJordan",
+    "icon": "/icons/experience/fischerjordan.png"
+  }
+]

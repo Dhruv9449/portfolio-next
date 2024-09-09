@@ -1,0 +1,211 @@
+.resizableBox {
+  position: relative; /* Ensure it's positioned correctly */
+  z-index: 5; /* Ensure it's above other elements */
+}
+
+.finderWindow {
+  /* width: 800px;
+  height: 500px; */
+  width: 100%;
+  height: 100%;
+  background-color: #00000000; /* Dark theme */
+  color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  border-width: 1px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border: 0.25px solid #848484;
+  z-index: 5;
+}
+
+
+.finderHeader {
+  top: 0;
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #3a3a3a;
+  border-bottom: 1px solid #000000;
+}
+
+.finderSidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.finderBody {
+  height: calc(100% - 35px); /* Adjust height based on your header */
+}
+
+.windowButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.closeButton,
+.minimizeButton,
+.maximizeButton {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+}
+
+.closeButton {
+  background-color: #ff5f57;
+}
+
+.minimizeButton {
+  background-color: #ffbd2f;
+}
+
+.maximizeButton {
+  background-color: #28c840;
+}
+
+.windowTitle {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.finderContent {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #1e1e1ee1;
+  padding: 10px;
+  border-right: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebarSection {
+  margin-bottom: 20px;
+}
+
+.sidebarItem {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.sidebarItem:hover,
+.sidebarItem.active {
+  background-color: #3c3c3c;
+  border-radius: 4px;
+}
+
+.iconGrid {
+  flex-grow: 1;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+}
+
+.iconItem {
+  text-align: center;
+  cursor: pointer;
+}
+
+.toolIcon {
+  padding: 7px;
+}
+
+/* Ensure icon is not grabbable */
+.iconImage {
+  width: 64px;
+  height: 64px;
+  user-select: none;
+}
+
+.iconLabel {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #ffffff;
+  text-shadow: 0 0 5px black;
+}
+
+.mainContent {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #1e1e1e;
+}
+
+.sidebarSectionTitle {
+  margin-left: 5px;
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #676767d5;
+}
+
+.sidebarFolderLogo {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px; /* Adjust spacing between icon and text */
+  color: rgb(69, 181, 255);
+}
+
+.sidebarVolumeLogo {
+  width: 17px;
+  height: 17px;
+  margin-right: 5px; /* Adjust spacing between icon and text */
+  /* color: rgb(132, 132, 132); */
+  color: yellow;
+}
+
+
+.resizableBox {
+  position: relative; /* Ensure it's positioned correctly */
+}
+
+.resizeHandle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px; /* Adjust size */
+  height: 20px; /* Adjust size */
+  cursor: se-resize; /* Cursor style for resizing */
+  background: rgba(255, 255, 255, 0); /* Optional: make it visible */
+}
+
+.categoryWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Add some space between categories */
+}
+
+.categorySection {
+  margin-top: 10px;
+  margin-bottom: 10px; /* Maintain some space below each category */
+  border-bottom: 0.25px solid #5a5a5a; /* Add a subtle border */
+}
+
+.categoryTitle {
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-bottom: 5px; /* Reduced margin for better spacing */
+  color: rgb(132, 132, 132);
+}
+
+.skillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+}

@@ -1,95 +1,163 @@
-import Image from "next/image";
+"use client"; // Mark this file as a Client Component
+
+import React, { useState } from "react";
+import TopBar from "@/components/topbar/topbar";
+import Dock from "@/components/dock/dock";
 import styles from "./page.module.css";
+import DesktopIcon from "@/components/desktopIcon/desktopIcon";
+import FinderWindow from "@/components/apps/finder/finder";
+import { v4 as uuidv4 } from "uuid";
+import ArcBrowser from "@/components/apps/arcBrowser/arcBrowser";
+import File from "@/components/apps/file/file";
+
+// Define the icon data with name and displayName
+const iconData = [
+  { name: "experience", displayName: "Experience", fileType: "folder" },
+  { name: "projects", displayName: "Projects", fileType: "folder" },
+  { name: "school", displayName: "School", fileType: "folder" },
+  { name: "skills", displayName: "Skills", fileType: "location" },
+  // Add more icons as needed
+];
 
 export default function Home() {
+  // State to manage dock & topbar visibility
+  const [hideTopbarAndDock, setHideTopbarAndDock] = useState(false);
+
+  // Finder Window Management
+  // ---------------------------------------------------------------------------------------------------------------------
+  // State to manage open finder windows with unique IDs and positions
+  const [finderWindows, setFinderWindows] = useState<
+    { id: string; name: string; displayName: string; x: number; y: number }[]
+  >([]);
+
+  // Offset for window positioning
+  const windowOffset = 30;
+
+  // Function to open a new Finder window with a unique ID and position
+  const openFinderWindow = (props: { name: string; displayName: string }) => {
+    // Initial position should be the center of the screen
+    const newWindow = {
+      id: uuidv4(), // Generate a unique ID for the window
+      name: props.name,
+      displayName: props.displayName,
+      // Position the window with an offset based on the number of open windows
+      x: windowOffset * (finderWindows.length + 10),
+      y: windowOffset * (finderWindows.length + 5),
+    };
+    setFinderWindows((prevWindows) => [...prevWindows, newWindow]);
+  };
+
+  // Function to close a Finder window by its unique ID
+  const closeFinderWindow = (id: string) => {
+    setFinderWindows((prevWindows) =>
+      prevWindows.filter((window) => window.id !== id)
+    );
+  };
+  // ---------------------------------------------------------------------------------------------------------------------
+
+  // Arc Browser Management
+  // ---------------------------------------------------------------------------------------------------------------------
+  const [isArcBrowserOpen, setIsArcBrowserOpen] = useState(false);
+
+  const openArcBrowser = () => {
+    setIsArcBrowserOpen(true);
+  };
+
+  const closeArcBrowser = () => {
+    setIsArcBrowserOpen(false);
+  };
+
+  const dockActions = {
+    arc: openArcBrowser,
+  };
+
+  // ---------------------------------------------------------------------------------------------------------------------
+
+  // File window management
+  // ---------------------------------------------------------------------------------------------------------------------
+
+  // State to manage open file windows with unique IDs and positions
+  const [fileWindows, setFileWindows] = useState<
+    {
+      id: string;
+      title: string;
+      name: string;
+      directory: string;
+      x: number;
+      y: number;
+    }[]
+  >([]);
+
+  // Function to open a new file window with a unique ID and position
+  const openFileWindow = (title: string, name: string, directory: string) => {
+    // Initial position should be the center of the screen
+    const newWindow = {
+      id: uuidv4(), // Generate a unique ID for the window
+      title,
+      name,
+      directory,
+      // Position the window with an offset based on the number of open windows
+      x: windowOffset * (fileWindows.length + 5),
+      y: windowOffset * (fileWindows.length + 5),
+    };
+    setFileWindows((prevWindows) => [...prevWindows, newWindow]);
+  };
+
+  // Function to close a file window by its unique ID
+  const closeFileWindow = (id: string) => {
+    setFileWindows((prevWindows) =>
+      prevWindows.filter((window) => window.id !== id)
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------------------------------
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+      {!hideTopbarAndDock && <TopBar />}
+      <div className={styles.desktop}>
+        <div className={styles.iconGrid}>
+          {iconData.map((icon, index) => (
+            <DesktopIcon
+              key={index}
+              icon={`/icons/${icon.name}.png`} // Constructing the icon path
+              label={icon.displayName}
+              onDoubleClick={() =>
+                openFinderWindow({
+                  name: icon.name,
+                  displayName: icon.displayName,
+                })
+              }
             />
-          </a>
+          ))}
         </div>
+        {finderWindows.map((window) => (
+          <FinderWindow
+            key={window.id} // Use the unique window ID as the key
+            title={window.displayName}
+            currFolder={window.displayName}
+            iconData={iconData}
+            onClose={() => closeFinderWindow(window.id)} // Close the specific window
+            defaultPosition={{ x: window.x, y: window.y }} // Set the position for each window
+            hideTopbarAndDock={setHideTopbarAndDock} // Pass the function to hide/show topbar and dock
+            openFileWindow={openFileWindow} // Pass the function to open a file window
+          />
+        ))}
+        {isArcBrowserOpen && <ArcBrowser onClose={closeArcBrowser} />}
+        {fileWindows.map((window) => (
+          <File
+            file={{
+              name: window.name,
+              title: window.title,
+              directory: window.directory,
+            }}
+            defaultPosition={{ x: window.x, y: window.y }}
+            hideTopbarAndDock={setHideTopbarAndDock}
+            onClose={() => closeFileWindow(window.id)}
+          />
+        ))}
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      {!hideTopbarAndDock && <Dock actions={dockActions} />}
     </main>
   );
 }

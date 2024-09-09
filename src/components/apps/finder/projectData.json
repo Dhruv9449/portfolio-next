@@ -1,0 +1,22 @@
+[
+  {
+    "name": "vitty",
+    "displayName": "Vitty",
+    "icon": "/icons/projects/vitty.png"
+  },
+  {
+    "name": "tizori",
+    "displayName": "Tizori",
+    "icon": "/icons/projects/tizori.png"
+  },
+  {
+    "name": "mou",
+    "displayName": "Mou",
+    "icon": "/icons/projects/mou.png"
+  },
+  {
+    "name": "chitros",
+    "displayName": "Chitros",
+    "icon": "/icons/projects/chitros.png"
+  }
+]

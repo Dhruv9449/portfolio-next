@@ -8,10 +8,25 @@ import schoolData from "./schoolData.json";
 import skillsData from "./skillsData.json";
 import { Rnd } from "react-rnd";
 
+// Typing for the iconData prop
+interface IconData {
+  name: string;
+  displayName: string;
+  fileType: string;
+}
+
+interface SkillData {
+  name: string;
+  displayName: string;
+  icon: string;
+  category: string;
+  link: string;
+}
+
 interface FinderProps {
   title: string;
   currFolder: string;
-  iconData: { name: string; displayName: string; fileType: string }[];
+  iconData: IconData[];
   onClose: () => void;
   defaultPosition: { x: number; y: number };
   hideTopbarAndDock: (hide: boolean) => void;
@@ -39,7 +54,16 @@ export default function Finder({
     setActiveFolder(folderName);
   };
 
-  const getCurrentFolderContents = () => {
+  // Function to get the contents of the active folder
+  const getCurrentFolderContents = ():
+    | Array<{
+        name: string;
+        displayName: string;
+        icon: string;
+        category?: string;
+        link?: string;
+      }>
+    | { [key: string]: SkillData[] } => {
     switch (activeFolder) {
       case "Experience":
         return experienceData;
@@ -48,41 +72,32 @@ export default function Finder({
       case "School":
         return schoolData;
       case "Skills":
-        return skillsData.reduce((acc, skill) => {
-          if (!acc[skill.category]) {
-            acc[skill.category] = [];
-          }
-          acc[skill.category].push(skill);
-          return acc;
-        }, {} as { [key: string]: Array<{ name: string; displayName: string; icon: string }> });
+        return skillsData.reduce(
+          (acc: { [key: string]: SkillData[] }, skill: SkillData) => {
+            if (!acc[skill.category]) {
+              acc[skill.category] = [];
+            }
+            acc[skill.category].push(skill);
+            return acc;
+          },
+          {} as { [key: string]: SkillData[] }
+        );
       default:
-        return [];
+        return [] as Array<{ name: string; displayName: string; icon: string }>;
     }
   };
 
+  const folderContents = getCurrentFolderContents();
+
   const toggleMaximize = () => {
     if (isMaximized) {
-      // Exit document full screen
-      // document.exitFullscreen();
-
-      // Restore original size and position
       hideTopbarAndDock(false);
       setSize({ width: 800, height: 500 });
       setPosition(defaultPosition);
     } else {
-      // // Enter document full screen
-      // document.documentElement.requestFullscreen();
-      // // Wait for the document to enter full screen
-      // document.addEventListener("fullscreenchange", () => {
-      //   if (document.fullscreenElement) {
-      // // Maximize window and set position to top-left corner
       hideTopbarAndDock(true);
       setSize({ width: window.innerWidth, height: window.innerHeight });
       setPosition({ x: 0, y: 0 });
-
-      // Remove event listener after maximizing
-      // document.removeEventListener("fullscreenchange", () => {});
-      // }
     }
     setIsMaximized(!isMaximized);
   };
@@ -102,11 +117,12 @@ export default function Finder({
         bottomLeft: false,
         topLeft: false,
       }}
-      onResizeStop={(e, direction, ref, delta, position) => {
+      onResizeStop={(e, direction, ref, delta, newPosition) => {
         setSize({
           width: parseInt(ref.style.width),
           height: parseInt(ref.style.height),
         });
+        setPosition(newPosition);
       }}
       onDragStop={(e, d) => {
         setPosition({ x: d.x, y: d.y });
@@ -169,52 +185,71 @@ export default function Finder({
             </div>
             <div className={styles.finderBody}>
               {activeFolder === "Skills" ? (
-                Object.entries(getCurrentFolderContents()).map(
-                  ([category, skills], index) => (
-                    <div key={index} className={styles.categorySection}>
-                      <h6 className={styles.categoryTitle}>{category}</h6>
-                      <div className={styles.iconGrid}>
-                        {skills.map((skill, skillIndex) => (
-                          <div
-                            key={skillIndex}
-                            className={styles.iconItem}
-                            onClick={() => window.open(skill.link, "_blank")}
-                          >
-                            <img
-                              src={skill.icon}
-                              alt={skill.displayName}
-                              className={`${styles.iconImage} ${styles.toolIcon}`}
-                            />
-                            <div className={styles.iconLabel}>
-                              {skill.displayName}
-                            </div>
+                Object.entries(
+                  folderContents as {
+                    [key: string]: SkillData[];
+                  }
+                ).map(([category, skills], index) => (
+                  <div key={index} className={styles.categorySection}>
+                    <h6 className={styles.categoryTitle}>{category}</h6>
+                    <div className={styles.iconGrid}>
+                      {skills.map((skill, skillIndex) => (
+                        <div
+                          key={skillIndex}
+                          className={styles.iconItem}
+                          onClick={() =>
+                            skill.link
+                              ? window.open(skill.link, "_blank")
+                              : null
+                          }
+                        >
+                          <img
+                            src={skill.icon}
+                            alt={skill.displayName}
+                            className={`${styles.iconImage} ${styles.toolIcon}`}
+                          />
+                          <div className={styles.iconLabel}>
+                            {skill.displayName}
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ))}
                     </div>
-                  )
-                )
+                  </div>
+                ))
               ) : (
                 <div className={styles.iconGrid}>
-                  {getCurrentFolderContents().map((icon, index) => (
-                    <div
-                      key={index}
-                      className={styles.iconItem}
-                      onClick={openFileWindow.bind(
-                        null,
-                        icon.displayName,
-                        icon.name,
-                        activeFolder
-                      )}
-                    >
-                      <img
-                        src={icon.icon}
-                        alt={icon.displayName}
-                        className={styles.iconImage}
-                      />
-                      <div className={styles.iconLabel}>{icon.displayName}</div>
-                    </div>
-                  ))}
+                  {Array.isArray(folderContents) &&
+                    folderContents.map(
+                      (
+                        icon: {
+                          name: string;
+                          displayName: string;
+                          icon: string;
+                        },
+                        index: number
+                      ) => (
+                        <div
+                          key={index}
+                          className={styles.iconItem}
+                          onClick={() =>
+                            openFileWindow(
+                              icon.displayName,
+                              icon.name,
+                              activeFolder
+                            )
+                          }
+                        >
+                          <img
+                            src={icon.icon}
+                            alt={icon.displayName}
+                            className={styles.iconImage}
+                          />
+                          <div className={styles.iconLabel}>
+                            {icon.displayName}
+                          </div>
+                        </div>
+                      )
+                    )}
                 </div>
               )}
             </div>

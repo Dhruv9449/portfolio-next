@@ -116,21 +116,21 @@ export default function Home() {
     <main className={styles.main}>
       {!hideTopbarAndDock && <TopBar />}
       <div className={styles.desktop}>
-        <div className={styles.iconGrid}>
-          {iconData.map((icon, index) => (
-            <DesktopIcon
-              key={index}
-              icon={`/icons/${icon.name}.png`} // Constructing the icon path
-              label={icon.displayName}
-              onDoubleClick={() =>
-                openFinderWindow({
-                  name: icon.name,
-                  displayName: icon.displayName,
-                })
-              }
-            />
-          ))}
-        </div>
+        {/* <div className={styles.iconGrid}> */}
+        {iconData.map((icon, index) => (
+          <DesktopIcon
+            key={index}
+            icon={`/icons/${icon.name}.png`} // Constructing the icon path
+            label={icon.displayName}
+            onDoubleClick={() =>
+              openFinderWindow({
+                name: icon.name,
+                displayName: icon.displayName,
+              })
+            }
+          />
+        ))}
+        {/* </div> */}
         {finderWindows.map((window) => (
           <FinderWindow
             key={window.id} // Use the unique window ID as the key
@@ -146,6 +146,7 @@ export default function Home() {
         {isArcBrowserOpen && <ArcBrowser onClose={closeArcBrowser} />}
         {fileWindows.map((window) => (
           <File
+            key={window.id}
             file={{
               name: window.name,
               title: window.title,

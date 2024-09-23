@@ -48,13 +48,7 @@ export default function DesktopIcon({
 
   return (
     <Rnd
-      default={{
-        x: 50,
-        y: 50,
-        width: 80,
-        height: 80,
-      }}
-      bounds="window"
+      bounds="parent"
       dragHandleClassName={styles.desktopIcon}
       onDragStart={handleStart}
       onDrag={handleDrag}

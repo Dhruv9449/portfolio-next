@@ -9,13 +9,20 @@ export default function TopBar() {
   const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
-    const optionsDate = { weekday: "short", month: "short", day: "numeric" };
-    const optionsTime = { hour: "2-digit", minute: "2-digit" };
+    const optionsDate: Intl.DateTimeFormatOptions = {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    };
+    const optionsTime: Intl.DateTimeFormatOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+    };
 
     const updateDateTime = () => {
       const date = new Date();
-      setCurrentDate(date.toLocaleDateString([], optionsDate));
-      setCurrentTime(date.toLocaleTimeString([], optionsTime));
+      setCurrentDate(date.toLocaleDateString(undefined, optionsDate));
+      setCurrentTime(date.toLocaleTimeString(undefined, optionsTime));
     };
 
     updateDateTime(); // Set initial date and time

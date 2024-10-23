@@ -5,12 +5,14 @@ import styles from "./desktopIcon.module.css";
 interface DesktopIconProps {
   icon: string;
   label: string;
+  initialCoordinates: { x: number; y: number };
   onDoubleClick: () => void; // Keep this as onDoubleClick
 }
 
 export default function DesktopIcon({
   icon,
   label,
+  initialCoordinates,
   onDoubleClick,
 }: DesktopIconProps) {
   const [dragging, setDragging] = useState(false);
@@ -54,6 +56,7 @@ export default function DesktopIcon({
       onDrag={handleDrag}
       onDragStop={handleStop}
       enableResizing={false}
+      position={initialCoordinates}
     >
       <div className={styles.desktopIcon} onClick={handleClick} title={label}>
         <img src={icon} alt={label} className={styles.icon} />

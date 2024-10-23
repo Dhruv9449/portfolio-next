@@ -122,6 +122,11 @@ export default function Home() {
             key={index}
             icon={`/icons/${icon.name}.png`} // Constructing the icon path
             label={icon.displayName}
+            // Align icons in a grid layout
+            initialCoordinates={{
+              x: (index % 8) * 100,
+              y: Math.floor(index / 8) * 100,
+            }}
             onDoubleClick={() =>
               openFinderWindow({
                 name: icon.name,

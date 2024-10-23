@@ -40,7 +40,10 @@ export default function File({
         }
       })
       .then((data) => setMarkdown(data))
-      .catch((error) => setMarkdown("Nothing to see here"));
+      .catch((error) => {
+        console.log(error);
+        setMarkdown("Nothing to see here");
+      });
   }, []);
 
   const toggleMaximize = () => {

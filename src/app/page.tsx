@@ -1,6 +1,6 @@
 "use client"; // Mark this file as a Client Component
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopBar from "@/components/topbar/topbar";
 import Dock from "@/components/dock/dock";
 import styles from "./page.module.css";
@@ -10,6 +10,8 @@ import { v4 as uuidv4 } from "uuid";
 import File from "@/components/apps/file/file";
 import ChromeBrowser from "@/components/apps/chromeBrowser/chromeBrowser";
 import PDFViewer from "@/components/apps/pdfViewer/pdfViewer";
+import AboutMe from "@/components/apps/aboutMe/aboutMe";
+import AboutMeCore from "@/components/apps/aboutMeCore/aboutMeCore";
 
 // Define the icon data with name and displayName
 const finderData = [
@@ -51,6 +53,18 @@ const iconData = [
 ];
 
 export default function Home() {
+  // If device is not a desktop, return a just AboutMeCore component, else return the full desktop
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth < 500 || window.innerHeight < 600
+  );
+
+  useEffect(() => {
+    const handleResize = () =>
+      setIsMobile(window.innerWidth < 1024 || window.innerHeight < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // State to manage dock & topbar visibility
   const [hideTopbarAndDock, setHideTopbarAndDock] = useState(false);
 
@@ -113,6 +127,19 @@ export default function Home() {
   const closePdfViewer = () => {
     setIsPdfViewerOpen(false);
   };
+  // ---------------------------------------------------------------------------------------------------------------------
+
+  // About Me Window Management
+  // ---------------------------------------------------------------------------------------------------------------------
+  const [isAboutMeOpen, setIsAboutMeOpen] = useState(true);
+
+  const openAboutMe = () => {
+    setIsAboutMeOpen(true);
+  };
+
+  const closeAboutMe = () => {
+    setIsAboutMeOpen(false);
+  };
 
   // ---------------------------------------------------------------------------------------------------------------------
 
@@ -155,7 +182,9 @@ export default function Home() {
 
   // ---------------------------------------------------------------------------------------------------------------------
 
-  return (
+  return isMobile ? (
+    <AboutMeCore />
+  ) : (
     <main className={styles.main}>
       {!hideTopbarAndDock && <TopBar />}
       <div className={styles.desktop}>
@@ -210,6 +239,14 @@ export default function Home() {
             onClose={closePdfViewer}
             hideTopbarAndDock={setHideTopbarAndDock}
             file="Resume.pdf"
+          />
+        )}
+        {isAboutMeOpen && (
+          <AboutMe
+            // Setting the default position as center of the screen
+            defaultPosition={{ x: 250, y: 10 }}
+            hideTopbarAndDock={setHideTopbarAndDock}
+            onClose={closeAboutMe}
           />
         )}
         {fileWindows.map((window) => (

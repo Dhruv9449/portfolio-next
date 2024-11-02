@@ -2,10 +2,10 @@ import styles from "./finder.module.css";
 import { useState } from "react";
 import { IoFolderOutline } from "react-icons/io5";
 import { CiHardDrive } from "react-icons/ci";
-import experienceData from "./experienceData.json";
-import projectsData from "./projectData.json";
-import schoolData from "./schoolData.json";
-import skillsData from "./skillsData.json";
+import experienceData from "../../../data/experienceData.json";
+import projectsData from "../../../data/projectData.json";
+import schoolData from "../../../data/schoolData.json";
+import skillsData from "../../../data/skillsData.json";
 import { Rnd } from "react-rnd";
 
 // Typing for the iconData prop

@@ -1,48 +1,22 @@
 import { use, useEffect, useState } from "react";
-import styles from "./file.module.css";
+import styles from "./aboutMe.module.css";
 import { Rnd } from "react-rnd";
-import MarkdownRenderer from "@/components/markdownRenderer/markdownRenderer";
+import AboutMeCore from "../aboutMeCore/aboutMeCore";
 
-interface FileProps {
-  file: {
-    name: string;
-    title: string;
-    directory: string;
-  };
+interface AboutMeProps {
   defaultPosition: { x: number; y: number };
   hideTopbarAndDock: (hide: boolean) => void;
   onClose: () => void;
 }
 
-export default function File({
-  file,
+export default function AboutMe({
   defaultPosition,
   hideTopbarAndDock,
   onClose,
-}: FileProps) {
+}: AboutMeProps) {
   const [isMaximized, setIsMaximized] = useState(false);
-  const [size, setSize] = useState({ width: 1000, height: 700 });
+  const [size, setSize] = useState({ width: 1000, height: 600 });
   const [position, setPosition] = useState(defaultPosition);
-
-  const [markdown, setMarkdown] = useState("");
-
-  useEffect(() => {
-    // If file found then fetch the markdown content, else set the markdown to "Nothing to see here".
-    // Ensure it catches any errors and sets the markdown to "Nothing to see here".
-    fetch(`/markdown/${file.directory}/${file.name}.md`)
-      .then((response) => {
-        if (response.ok) {
-          return response.text();
-        } else {
-          throw new Error("File not found");
-        }
-      })
-      .then((data) => setMarkdown(data))
-      .catch((error) => {
-        console.log(error);
-        setMarkdown("Nothing to see here");
-      });
-  }, []);
 
   const toggleMaximize = () => {
     if (isMaximized) {
@@ -93,17 +67,10 @@ export default function File({
               onClick={toggleMaximize}
             ></button>
           </div>
-          <div className={styles.windowTitle}>
-            <img
-              src={`/icons/${file.directory}/${file.name}.png`}
-              alt={""}
-              className={styles.windowIcon}
-            />
-            {file.title}
-          </div>
+          <div className={styles.windowTitle}>About Me</div>
         </div>
         <div className={styles.windowContent}>
-          <MarkdownRenderer content={markdown} />
+          <AboutMeCore />
         </div>
       </div>
     </Rnd>

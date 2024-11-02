@@ -1,0 +1,197 @@
+.aboutMeContent {
+    padding: 5% 10%;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+
+.heroText {
+    flex: 1;
+}
+
+.heroImage {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    margin-left: 20px;
+}
+
+.hero img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Typography */
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+.hero h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    color: #ccc;
+}
+
+.hero h3 {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #bbb;
+}
+
+/* Social Links */
+.socialLinks {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+.socialLinks a {
+    color: #ffffff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.socialLinks a:hover {
+    background-color: #444;
+    color: #e5e5e5;
+}
+
+/* Section Styles */
+.section {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.section h2 {
+    font-size: 1.8rem;
+    color: #ffffff;
+    border-bottom: 2px solid #444;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.sectionContent {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+/* Skills Section */
+/* .skillList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.skillItem {
+    background-color: #444;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+} */
+
+.skillList {
+    display: flex;
+    flex-wrap: wrap; /* Allows skills to wrap onto the next line */
+    justify-content: center; /* Centers the skill items */
+    margin: 0 -10px; /* Adjusts spacing between items */
+  }
+  
+  .skillItem {
+    background-color: #444;
+    padding: 5px 10px; /* Adjusts padding inside the skill item */
+    border-radius: 5px;
+    display: flex; /* Enables flexbox layout */
+    align-items: center; /* Centers items vertically */
+    justify-content: center; /* Centers items horizontally */
+    margin: 10px; /* Adds margin around each skill item */
+    font-size: 0.8rem; /* Adjusts font size if needed */
+  }
+  
+  .skillItem img {
+    width: 24px; /* Adjust the size of the icon */
+    height: auto; /* Keeps the aspect ratio */
+    margin-right: 5px; /* Space between the icon and text */
+  }
+
+/* Experience and Education Styles */
+.educationItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.experienceItem {
+    margin-bottom: 15px;
+}
+
+.experienceHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.educationLeft,
+.experienceLeft {
+    flex: 1;
+    font-size: 1.1rem;
+    color: #e5e5e5;
+}
+
+.educationRight,
+.experienceRight {
+    text-align: right;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.experienceDescription {
+    flex: 1;
+    margin-top: 5px; /* Space between item and description */
+}
+
+.aboutMeContent ul {
+    padding-left: 20px; /* Indent for the list */
+    margin-top: 5px; /* Space above the list */
+    color: #ccc; /* List color */
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "name": "balkanid",
+    "displayName": "BalkanID",
+    "icon": "/icons/experience/balkanid.png",
+    "duration": "April 2023 - Present",
+    "location": "Remote, Austin",
+    "position": "Engineering Intern",
+    "description": [
+      "Developed web application features including rules engine, IAM risk analyzer, and access campaigns using GraphQL, Golang, Typescript and React.",
+      "Created an Argo workflow for applying rules, significantly reducing resource consumption and system errors.",
+      "Led the development of REST APIs for autonomous app operations, integrating with customer applications and Balkan’s AI models using Golang, Kafka, GRPC, and S3 in a containerized micro-service architecture.",
+      "Built entitlement extractors for various applications such as Datadog, Sumologic, Jenkins using Golang, and integrated them into the main app and CLI.",
+      "Worked with CI/CD pipelines using GitHub workflows, AWS (ECR, S3), and ArgoCD.",
+      "Provided knowledge transfer, conducted code reviews, and offered guidance to new team members."
+    ]
+  },
+  {
+    "name": "fischerjordan",
+    "displayName": "FischerJordan",
+    "icon": "/icons/experience/fischerjordan.png",
+    "duration": "Sep 2022 - Sep 2023",
+    "location": "Remote, New York",
+    "position": "Backend Development Intern",
+    "description": [
+      "Designed and built an internal Knowledge Management dashboard using Django Rest Framework, PostgreSQL, and AWS (EC2, S3) in a Docker-based containerized environment.",
+      "Implemented Celery for periodic and asynchronous tasks, improving system efficiency.",
+      "Developed a new, more efficient algorithm, reducing time and code complexity of the main API algorithm.",
+      "Integrated third-party APIs including Google APIs (Identity Services, Drive, Docs) and OpenAI API.",
+      "Added features such as version control, review approval system, comments, and multi-level search.",
+      "Built an automated CI/CD pipeline for multi-instance application deployment.",
+      "Collaborated with the frontend team and conducted regular meetings with analysts to gather feedback and address user requests."
+    ]
+  }
+]

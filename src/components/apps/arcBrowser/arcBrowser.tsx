@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Draggable from "react-draggable";
-import styles from "./arcBrowser.module.css"; // Assuming custom CSS is in arcBrowser.module.css
+import { Rnd } from "react-rnd";
+import styles from "./arcBrowser.module.css"; // Ensure custom CSS for Arc Browser
 
 interface Tab {
   name: string;
@@ -8,10 +8,7 @@ interface Tab {
 }
 
 const initialTabs: Tab[] = [
-  {
-    name: "Google",
-    url: "https://www.google.com/search?igu=1",
-  },
+  { name: "Google", url: "https://www.google.com/search?igu=1" },
   { name: "GitHub", url: "https://www.github.dev/Dhruv9449/Chitros" },
   { name: "YouTube", url: "https://www.youtube.com" },
 ];
@@ -23,9 +20,7 @@ export default function ArcBrowser({ onClose }: { onClose: () => void }) {
   const [size, setSize] = useState({ width: 1000, height: 600 });
   const [position, setPosition] = useState({ x: 100, y: 100 });
 
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-  };
+  const handleTabClick = (index: number) => setActiveTab(index);
 
   const toggleMaximize = () => {
     if (isMaximized) {
@@ -39,14 +34,20 @@ export default function ArcBrowser({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <Draggable
-      bounds="body"
+    <Rnd
+      size={size}
       position={isMaximized ? { x: 0, y: 0 } : position}
-      handle=".arcBrowserHeader"
+      onDragStop={(e, d) => setPosition({ x: d.x, y: d.y })}
+      onResizeStop={(e, direction, ref, delta, position) => {
+        setSize({ width: ref.offsetWidth, height: ref.offsetHeight });
+        setPosition(position);
+      }}
+      bounds="body"
+      disableDragging={isMaximized}
     >
       <div className={styles.arcBrowser}>
-        {/* Header with macOS-style window buttons */}
-        <div className={`${styles.arcBrowserHeader} draggableHandle`}>
+        {/* Arc Browser-like header */}
+        <div className={styles.arcBrowserHeader}>
           <div className={styles.windowButtons}>
             <button className={styles.closeButton} onClick={onClose}></button>
             <button className={styles.minimizeButton}></button>
@@ -73,7 +74,7 @@ export default function ArcBrowser({ onClose }: { onClose: () => void }) {
           ))}
         </div>
 
-        {/* Main content area (iframe to simulate web page) */}
+        {/* Main browser content (iframe to display page) */}
         <div className={styles.browserContent}>
           <iframe
             src={tabs[activeTab].url}
@@ -83,6 +84,6 @@ export default function ArcBrowser({ onClose }: { onClose: () => void }) {
           />
         </div>
       </div>
-    </Draggable>
+    </Rnd>
   );
 }

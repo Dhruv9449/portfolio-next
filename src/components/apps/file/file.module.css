@@ -19,7 +19,6 @@
   align-items: center; /* Center items vertically */
   cursor: move; /* Cursor style for draggable */
   position: relative; /* Relative positioning for title centering */
-
 }
 
 .windowTitle {

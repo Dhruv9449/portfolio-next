@@ -1,0 +1,120 @@
+.pdfViewer {
+    background-color: #1e1e1e; /* Dark background */
+    border: 1px solid #444; /* Border around the window */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    color: #fff; /* White text color */
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: hidden; /* Hide overflow content */
+  }
+  
+.header {
+    background-color: #333;
+    /* padding: 16px 12px; */
+    display: flex;
+    align-items: center;
+    cursor: move;
+    position: relative;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.windowButtons {
+    display: flex;
+    gap: 8px;
+    height: 100%;
+    align-items: center;
+    padding: 18px 16px;
+}
+
+.closeButton,
+.minimizeButton,
+.maximizeButton {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+.closeButton {
+    background-color: #ff5f57;
+}
+
+.minimizeButton {
+    background-color: #ffbd2f;
+}
+
+.maximizeButton {
+    background-color: #28c840;
+}
+
+.centerHeader {
+    flex: 1;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.currentPageLabel {
+    font-size: 10px;
+    font-weight: lighter;
+    color: #bcbcbcf8;
+}
+
+/* .previewOptions {
+    display: flex;
+    gap: 14px;
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+    align-items: center;
+    margin-right:  10px;
+    height: 75%;
+}
+
+.previewButtons {
+    color: #ffffff;
+    transition: transform 0.2s ease;
+}
+
+.previewButtons:hover {
+    transform: scale(1.1);
+    color: #cccccc;
+} */
+
+.previewOptions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.previewButtons {
+    font-size: 28px; /* Larger font size for better visibility */
+    color: #ffffff;
+    cursor: pointer;
+    padding: 4px; /* Slight padding for rounded shape */
+    border-radius: 8px; /* Rounded corners */
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: none;
+}
+
+.previewButtons:hover {
+    background-color: rgba(85, 85, 85, 0.8); /* Lighten background on hover */
+    color: #ffffff;
+}
+
+.viewerContainer {
+    flex-grow: 1; /* Takes up remaining space */
+    display: flex;
+    justify-content: center;
+    overflow: scroll;
+    align-items: center;
+    background-color: #1e1e1e; /* Match header background */
+}
+

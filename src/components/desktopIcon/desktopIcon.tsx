@@ -17,18 +17,7 @@ export default function DesktopIcon({
 }: DesktopIconProps) {
   const [dragging, setDragging] = useState(false);
   const [clickTimeout, setClickTimeout] = useState<NodeJS.Timeout | null>(null); // Track the click timeout
-
-  const handleStart = () => {
-    setDragging(false); // Reset dragging state when starting to drag
-  };
-
-  const handleDrag = () => {
-    setDragging(true); // Set dragging state to true while dragging
-  };
-
-  const handleStop = () => {
-    setDragging(false); // Reset dragging state when dragging stops
-  };
+  const [position, setPosition] = useState(initialCoordinates);
 
   const handleClick = () => {
     if (dragging) return; // Prevent action if dragging
@@ -52,11 +41,11 @@ export default function DesktopIcon({
     <Rnd
       bounds="parent"
       dragHandleClassName={styles.desktopIcon}
-      onDragStart={handleStart}
-      onDrag={handleDrag}
-      onDragStop={handleStop}
+      onDragStop={(e, d) => {
+        setPosition({ x: d.x, y: d.y });
+      }}
       enableResizing={false}
-      position={initialCoordinates}
+      position={position}
     >
       <div className={styles.desktopIcon} onClick={handleClick} title={label}>
         <img src={icon} alt={label} className={styles.icon} />

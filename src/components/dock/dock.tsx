@@ -7,10 +7,10 @@ interface DockProps {
 export default function Dock({ actions }: DockProps) {
   const icons = [
     {
-      name: "arc",
-      displayName: "Arc",
+      name: "chrome",
+      displayName: "Chrome",
       onClick: () => {
-        actions["arc"]();
+        actions["chrome"]();
       },
     },
     {

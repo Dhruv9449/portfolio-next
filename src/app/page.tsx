@@ -7,15 +7,46 @@ import styles from "./page.module.css";
 import DesktopIcon from "@/components/desktopIcon/desktopIcon";
 import FinderWindow from "@/components/apps/finder/finder";
 import { v4 as uuidv4 } from "uuid";
-import ArcBrowser from "@/components/apps/arcBrowser/arcBrowser";
 import File from "@/components/apps/file/file";
+import ChromeBrowser from "@/components/apps/chromeBrowser/chromeBrowser";
+import PDFViewer from "@/components/apps/pdfViewer/pdfViewer";
 
 // Define the icon data with name and displayName
+const finderData = [
+  {
+    name: "experience",
+    displayName: "Experience",
+    fileType: "folder",
+    application: "finder",
+  },
+  {
+    name: "projects",
+    displayName: "Projects",
+    fileType: "folder",
+    application: "finder",
+  },
+  {
+    name: "school",
+    displayName: "School",
+    fileType: "folder",
+    application: "finder",
+  },
+  {
+    name: "skills",
+    displayName: "Skills",
+    fileType: "location",
+    application: "finder",
+  },
+];
+
 const iconData = [
-  { name: "experience", displayName: "Experience", fileType: "folder" },
-  { name: "projects", displayName: "Projects", fileType: "folder" },
-  { name: "school", displayName: "School", fileType: "folder" },
-  { name: "skills", displayName: "Skills", fileType: "location" },
+  ...finderData,
+  {
+    name: "pdf",
+    displayName: "Resume.pdf",
+    fileType: "pdf",
+    application: "pdfPreview",
+  },
   // Add more icons as needed
 ];
 
@@ -55,20 +86,32 @@ export default function Home() {
   };
   // ---------------------------------------------------------------------------------------------------------------------
 
-  // Arc Browser Management
+  // Chrome Browser Management
   // ---------------------------------------------------------------------------------------------------------------------
-  const [isArcBrowserOpen, setIsArcBrowserOpen] = useState(false);
+  const [isChromeBrowserOpen, setIsChromeBrowserOpen] = useState(false);
 
-  const openArcBrowser = () => {
-    setIsArcBrowserOpen(true);
+  const openChromeBrowser = () => {
+    setIsChromeBrowserOpen(true);
   };
 
-  const closeArcBrowser = () => {
-    setIsArcBrowserOpen(false);
+  const closeChromeBrowser = () => {
+    setIsChromeBrowserOpen(false);
   };
 
   const dockActions = {
-    arc: openArcBrowser,
+    chrome: openChromeBrowser,
+  };
+
+  // PDF Viewer Management
+  // ---------------------------------------------------------------------------------------------------------------------
+  const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
+
+  const openPdfViewer = (name: string, displayName: string) => {
+    setIsPdfViewerOpen(true);
+  };
+
+  const closePdfViewer = () => {
+    setIsPdfViewerOpen(false);
   };
 
   // ---------------------------------------------------------------------------------------------------------------------
@@ -127,12 +170,18 @@ export default function Home() {
               x: (index % 8) * 100,
               y: Math.floor(index / 8) * 100,
             }}
-            onDoubleClick={() =>
-              openFinderWindow({
-                name: icon.name,
-                displayName: icon.displayName,
-              })
-            }
+            onDoubleClick={() => {
+              if (icon.application === "finder") {
+                openFinderWindow({
+                  name: icon.name,
+                  displayName: icon.displayName,
+                });
+              } else if (icon.application === "pdfPreview") {
+                openPdfViewer(icon.name, icon.displayName);
+              } else {
+                openFileWindow(icon.displayName, icon.name, icon.name);
+              }
+            }}
           />
         ))}
         {/* </div> */}
@@ -141,14 +190,28 @@ export default function Home() {
             key={window.id} // Use the unique window ID as the key
             title={window.displayName}
             currFolder={window.displayName}
-            iconData={iconData}
+            iconData={finderData}
             onClose={() => closeFinderWindow(window.id)} // Close the specific window
             defaultPosition={{ x: window.x, y: window.y }} // Set the position for each window
             hideTopbarAndDock={setHideTopbarAndDock} // Pass the function to hide/show topbar and dock
             openFileWindow={openFileWindow} // Pass the function to open a file window
           />
         ))}
-        {isArcBrowserOpen && <ArcBrowser onClose={closeArcBrowser} />}
+        {isChromeBrowserOpen && (
+          <ChromeBrowser
+            defaultPosition={{ x: 100, y: 100 }}
+            onClose={closeChromeBrowser}
+            hideTopbarAndDock={setHideTopbarAndDock}
+          />
+        )}
+        {isPdfViewerOpen && (
+          <PDFViewer
+            defaultPosition={{ x: 100, y: 100 }}
+            onClose={closePdfViewer}
+            hideTopbarAndDock={setHideTopbarAndDock}
+            file="Resume.pdf"
+          />
+        )}
         {fileWindows.map((window) => (
           <File
             key={window.id}

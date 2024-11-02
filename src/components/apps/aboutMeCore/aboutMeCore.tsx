@@ -61,8 +61,9 @@ export default function AboutMeCore() {
         <h2>About Me</h2>
         <div className={styles.sectionContent}>
           <p>
-            I'm a passionate developer with a knack for backend systems, always
-            eager to explore new technologies and solve challenging problems.
+            I&apos;m a passionate developer with a knack for backend systems,
+            always eager to explore new technologies and solve challenging
+            problems.
           </p>
         </div>
       </div>

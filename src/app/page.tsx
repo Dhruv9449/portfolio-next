@@ -54,7 +54,7 @@ const iconData = [
 
 export default function Home() {
   // If device is not a desktop, return a just AboutMeCore component, else return the full desktop
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 500 || window.innerHeight < 600;

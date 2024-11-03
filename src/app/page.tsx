@@ -54,13 +54,17 @@ const iconData = [
 
 export default function Home() {
   // If device is not a desktop, return a just AboutMeCore component, else return the full desktop
-  const [isMobile, setIsMobile] = useState(
-    window.innerWidth < 500 || window.innerHeight < 600
-  );
-
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    const handleResize = () =>
-      setIsMobile(window.innerWidth < 1024 || window.innerHeight < 768);
+    const handleResize = () => {
+      const mobile = window.innerWidth < 500 || window.innerHeight < 600;
+      setIsMobile(mobile);
+    };
+
+    // Set initial state based on window dimensions
+    handleResize();
+
+    // Listen to window resize events
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);

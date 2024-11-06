@@ -51,7 +51,7 @@ const formatPromptPath = (path: string): string => path.replace(/^~\/?/, "~");
 
 interface TerminalProps {
   defaultPosition: { x: number; y: number };
-  hideTopbarAndDock: boolean;
+  hideTopbarAndDock: (hide: boolean) => void;
   onClose: () => void;
 }
 
@@ -168,6 +168,19 @@ export default function Terminal({
     setInput("");
   };
 
+  const toggleMaximize = () => {
+    if (isMaximized) {
+      hideTopbarAndDock(false);
+      setSize({ width: 800, height: 500 });
+      setPosition(defaultPosition);
+    } else {
+      hideTopbarAndDock(true);
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+      setPosition({ x: 0, y: 0 });
+    }
+    setIsMaximized(!isMaximized);
+  };
+
   // Updated helper function to format prompt path
   const formatPromptPath = (path: string): string => {
     return path === "~" ? "~" : path.replace(/^~\//, "~/");
@@ -206,7 +219,7 @@ export default function Terminal({
             <button className={styles.minimizeButton}></button>
             <button
               className={styles.maximizeButton}
-              onClick={() => setIsMaximized(!isMaximized)}
+              onClick={toggleMaximize}
             ></button>
           </div>
           <div className={styles.windowTitle}>

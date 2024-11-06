@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
 import styles from "./chromeBrowser.module.css";
 import { BsBing, BsGithub, BsLinkedin, BsYoutube } from "react-icons/bs";
+import { IoMdArrowBack, IoMdArrowForward, IoMdRefresh } from "react-icons/io";
 
 interface Tab {
   name: string;
@@ -286,11 +287,14 @@ export default function ChromeBrowser({
             }
             onClick={showHomeScreen ? undefined : goBack}
           >
-            ←
+            <IoMdArrowBack />
           </button>
-          <button className={styles.navButton}>→</button>
+          <button className={styles.navButton}>
+            {" "}
+            <IoMdArrowForward />{" "}
+          </button>
           <button className={styles.navButtonReload} onClick={handleReload}>
-            ⟳
+            <IoMdRefresh />
           </button>
           <input
             className={styles.urlInput}

@@ -21,7 +21,9 @@ export default function Dock({ actions }: DockProps) {
     {
       name: "iterm",
       displayName: "iTerm",
-      onClick: () => {}, // No action for now
+      onClick: () => {
+        actions["terminal"]();
+      },
     },
     {
       name: "slack",

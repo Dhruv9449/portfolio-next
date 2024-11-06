@@ -12,6 +12,7 @@ import ChromeBrowser from "@/components/apps/chromeBrowser/chromeBrowser";
 import PDFViewer from "@/components/apps/pdfViewer/pdfViewer";
 import AboutMe from "@/components/apps/aboutMe/aboutMe";
 import AboutMeCore from "@/components/apps/aboutMeCore/aboutMeCore";
+import Terminal from "@/components/apps/terminal/terminal";
 
 // Define the icon data with name and displayName
 const finderData = [
@@ -115,9 +116,23 @@ export default function Home() {
   const closeChromeBrowser = () => {
     setIsChromeBrowserOpen(false);
   };
+  // ---------------------------------------------------------------------------------------------------------------------
+
+  // Terminal Window Management
+  // ---------------------------------------------------------------------------------------------------------------------
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+
+  const openTerminal = () => {
+    setIsTerminalOpen(true);
+  };
+
+  const closeTerminal = () => {
+    setIsTerminalOpen(false);
+  };
 
   const dockActions = {
     chrome: openChromeBrowser,
+    terminal: openTerminal,
   };
 
   // PDF Viewer Management
@@ -234,6 +249,13 @@ export default function Home() {
           <ChromeBrowser
             defaultPosition={{ x: 100, y: 100 }}
             onClose={closeChromeBrowser}
+            hideTopbarAndDock={setHideTopbarAndDock}
+          />
+        )}
+        {isTerminalOpen && (
+          <Terminal
+            defaultPosition={{ x: 100, y: 100 }}
+            onClose={closeTerminal}
             hideTopbarAndDock={setHideTopbarAndDock}
           />
         )}

@@ -140,8 +140,13 @@
     display: flex; /* Enables flexbox layout */
     align-items: center; /* Centers items vertically */
     justify-content: center; /* Centers items horizontally */
-    margin: 10px; /* Adds margin around each skill item */
+    margin: 5px; /* Adds margin around each skill item */
     font-size: 0.8rem; /* Adjusts font size if needed */
+    font-weight: 600; /* Adjusts font weight if needed */
+  }
+
+  .skillItem:hover {
+    background-color: #555; /* Changes the background color on hover */
   }
   
   .skillItem img {

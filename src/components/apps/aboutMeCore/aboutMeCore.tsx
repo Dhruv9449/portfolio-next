@@ -120,14 +120,16 @@ export default function AboutMeCore() {
         <h2>Skills</h2>
         <div className={styles.skillList}>
           {skillsData.map((skill) => (
-            <div className={styles.skillItem} key={skill.name}>
-              <img
-                src={skill.icon}
-                alt={skill.displayName}
-                style={{ width: "20px", marginRight: "5px" }}
-              />
-              {skill.displayName}
-            </div>
+            <a href={skill.link} target="_blank" key={skill.name}>
+              <div className={styles.skillItem}>
+                <img
+                  src={skill.icon}
+                  alt={skill.displayName}
+                  style={{ width: "20px", marginRight: "5px" }}
+                />
+                {skill.displayName}
+              </div>
+            </a>
           ))}
         </div>
       </div>

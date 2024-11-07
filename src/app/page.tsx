@@ -13,6 +13,7 @@ import PDFViewer from "@/components/apps/pdfViewer/pdfViewer";
 import AboutMe from "@/components/apps/aboutMe/aboutMe";
 import AboutMeCore from "@/components/apps/aboutMeCore/aboutMeCore";
 import Terminal from "@/components/apps/terminal/terminal";
+import VSCode from "@/components/apps/vscode/vscode";
 
 // Define the icon data with name and displayName
 const finderData = [
@@ -129,10 +130,25 @@ export default function Home() {
   const closeTerminal = () => {
     setIsTerminalOpen(false);
   };
+  // ---------------------------------------------------------------------------------------------------------------------
+
+  // VSCode Window Management
+  // ---------------------------------------------------------------------------------------------------------------------
+  const [isVSCodeOpen, setIsVSCodeOpen] = useState(false);
+
+  const openVSCode = () => {
+    setIsVSCodeOpen(true);
+  };
+
+  const closeVSCode = () => {
+    setIsVSCodeOpen(false);
+  };
+  // ---------------------------------------------------------------------------------------------------------------------
 
   const dockActions = {
     chrome: openChromeBrowser,
     terminal: openTerminal,
+    vscode: openVSCode,
   };
 
   // PDF Viewer Management
@@ -256,6 +272,13 @@ export default function Home() {
           <Terminal
             defaultPosition={{ x: 100, y: 100 }}
             onClose={closeTerminal}
+            hideTopbarAndDock={setHideTopbarAndDock}
+          />
+        )}
+        {isVSCodeOpen && (
+          <VSCode
+            defaultPosition={{ x: 100, y: 100 }}
+            onClose={closeVSCode}
             hideTopbarAndDock={setHideTopbarAndDock}
           />
         )}

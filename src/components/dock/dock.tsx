@@ -38,7 +38,9 @@ export default function Dock({ actions }: DockProps) {
     {
       name: "vscode",
       displayName: "VSCode",
-      onClick: () => {}, // No action for now
+      onClick: () => {
+        actions["vscode"]();
+      },
     },
     {
       name: "github",

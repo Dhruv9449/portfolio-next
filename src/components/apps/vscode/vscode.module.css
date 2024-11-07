@@ -1,0 +1,80 @@
+.window {
+    background-color: #1e1e1e; /* Dark background */
+    border: 1px solid #444; /* Border around the window */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    color: #fff; /* White text color */
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: hidden; /* Hide overflow content */
+  }
+  
+  .windowHeader {
+    background-color: #333; /* Darker header background */
+    padding: 10px; /* Padding for header */
+    display: flex; /* Flex layout for header */
+    align-items: center; /* Center items vertically */
+    cursor: move; /* Cursor style for draggable */
+    position: relative; /* Relative positioning for title centering */
+  }
+  
+  .windowTitle {
+    font-size: 16px; /* Title font size */
+    font-weight: bold; /* Bold title */
+    position: absolute; /* Absolutely position the title */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust to truly center */
+    display: flex; /* Flex layout for header */
+  
+  }
+  
+  .windowIcon {
+    width: 22px; /* Icon width */
+    height: 22px; /* Icon height */
+    margin-right: 5px; /* Space between icon and title */
+  }
+  
+  .windowButtons {
+    display: flex; /* Flex layout for buttons */
+    gap: 8px; /* Space between buttons */
+  }
+  
+  .closeButton,
+  .minimizeButton,
+  .maximizeButton {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+  }
+  
+  .closeButton {
+    background-color: #ff5f57;
+  }
+  
+  .minimizeButton {
+    background-color: #ffbd2f;
+  }
+  
+  .maximizeButton {
+    background-color: #28c840;
+  }
+
+  .windowContent {
+    flex: 1; /* Fill remaining space */
+    padding: 0;
+    margin: 0;
+    overflow: auto; /* Scrollable content */
+  }
+
+  .vscode {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }

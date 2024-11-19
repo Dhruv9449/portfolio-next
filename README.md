@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+<a href="https://github.com/Dhruv9449">
+    <img src="/public/logo.svg" alt="Dhruv Shah" height=200/>
+</a>
+    <h2 align="center"> Portfolio Website 🖥️ </h2>
+    <h4 align="center"> A macOS-inspired portfolio website showcasing my skills, experience, and projects through an interactive desktop interface.</h4>
+</p>
 
-## Getting Started
+<span align="center">
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![CSS Modules](https://img.shields.io/badge/CSS%20Modules-000000?style=for-the-badge&logo=css-modules&logoColor=white)
 
+</span>
+
+## Table of Contents
+- [Key Features](#key-features)
+- [Tech Stack and Dependencies](#tech-stack-and-dependencies)
+    - [Framework](#framework)
+    - [UI Components](#ui-components)
+    - [Content Rendering](#content-rendering)
+- [Setting-up and Installation](#setting-up-and-installation)
+    - [Prerequisites](#prerequisites)
+    - [Installation Steps](#installation-steps)
+- [Developer](#developer)
+
+<br>
+
+## Key Features
+- [x] 🖥️ macOS-inspired UI/UX design
+- [x] 🪟 Draggable and resizable windows
+- [x] 📱 Responsive design
+- [x] 🔗 Interactive dock with application shortcuts
+- [x] 📄 Markdown rendering for content
+- [x] 🌐 Integrated VSCode viewer
+- [x] 💻 Terminal emulator
+- [x] 🌍 Web browser simulation
+
+<br>
+<br>
+
+## Tech Stack and Dependencies
+### Framework
+- [Next.js 13](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://reactjs.org/)
+
+### UI Components
+- [CSS Modules](https://github.com/css-modules/css-modules)
+- [React-Rnd](https://github.com/bokuweb/react-rnd)
+
+### Content Rendering
+- [React-Markdown](https://github.com/remarkjs/react-markdown)
+
+<br>
+<br>
+
+## Setting-up and Installation
+### Prerequisites
+- Node.js and npm installed
+- Git for version control
+
+### Installation Steps
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/YourUsername/portfolio-website.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<br>
+<br>
 
-## Learn More
+## Developer
+<table>
+    <tr align="center">
+        <td>
+        Dhruv Shah
+        <p align="center">
+            <img src = "https://avatars.githubusercontent.com/u/88224695" width="150" height="150" alt="Dhruv Shah">
+        </p>
+            <p align="center">
+                <a href = "https://github.com/Dhruv9449">
+                    <img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36" alt="GitHub"/>
+                </a>
+                <a href = "https://www.linkedin.com/in/Dhruv9449" target="_blank">
+                    <img src = "http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36" alt="LinkedIn"/>
+                </a>
+                <a href = "mailto:dhruvshahrds@gmail.com" target="_blank">
+                    <img src = "https://www.iconninja.com/files/312/807/734/share-send-email-chat-circle-message-mail-icon.svg" width="36" height="36" alt="Email"/>
+                </a>
+            </p>
+        </td>
+    </tr>
+</table>
 
-To learn more about Next.js, take a look at the following resources:
+<p align="center">
+    Made with ❤️ by <a href="https://github.com/Dhruv9449">Dhruv Shah</a>
+</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

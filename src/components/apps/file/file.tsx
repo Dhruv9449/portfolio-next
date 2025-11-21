@@ -29,7 +29,7 @@ export default function File({
   useEffect(() => {
     // If file found then fetch the markdown content, else set the markdown to "Nothing to see here".
     // Ensure it catches any errors and sets the markdown to "Nothing to see here".
-    fetch(`/markdown/${file.directory}/${file.name}.md`)
+    fetch(`/markdown/${file.directory.toLowerCase()}/${file.name}.md`)
       .then((response) => {
         if (response.ok) {
           return response.text();
@@ -42,7 +42,7 @@ export default function File({
         console.log(error);
         setMarkdown("Nothing to see here");
       });
-  }, []);
+  }, [file.directory, file.name]);
 
   const toggleMaximize = () => {
     if (isMaximized) {
@@ -106,7 +106,7 @@ export default function File({
           </div>
           <div className={styles.windowTitle}>
             <img
-              src={`/icons/${file.directory}/${file.name}.png`}
+              src={`/icons/${file.directory.toLowerCase()}/${file.name}.png`}
               alt={""}
               className={styles.windowIcon}
             />

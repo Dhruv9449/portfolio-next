@@ -57,6 +57,14 @@ export default function File({
     setIsMaximized(!isMaximized);
   };
 
+  const handleClose = () => {
+    // Reset topbar and dock visibility when closing
+    if (isMaximized) {
+      hideTopbarAndDock(false);
+    }
+    onClose();
+  };
+
   return (
     <Rnd
       size={{ width: size.width, height: size.height }}
@@ -86,7 +94,10 @@ export default function File({
       <div className={styles.window}>
         <div className={styles.windowHeader + " draggableHandle"}>
           <div className={styles.windowButtons}>
-            <button className={styles.closeButton} onClick={onClose}></button>
+            <button
+              className={styles.closeButton}
+              onClick={handleClose}
+            ></button>
             <button className={styles.minimizeButton}></button>
             <button
               className={styles.maximizeButton}

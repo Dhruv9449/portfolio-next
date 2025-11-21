@@ -21,6 +21,7 @@
     - [Framework](#framework)
     - [UI Components](#ui-components)
     - [Content Rendering](#content-rendering)
+- [Project Architecture](#project-architecture)
 - [Setting-up and Installation](#setting-up-and-installation)
     - [Prerequisites](#prerequisites)
     - [Installation Steps](#installation-steps)
@@ -57,6 +58,35 @@
 <br>
 <br>
 
+## Project Architecture
+
+This project follows a scalable and modular architecture:
+
+```
+src/
+├── app/           # Next.js app directory
+├── components/    # React components
+├── config/        # Configuration files
+├── constants/     # Application constants
+├── data/          # JSON data files
+├── hooks/         # Custom React hooks
+├── types/         # TypeScript definitions
+└── utils/         # Utility functions
+```
+
+### Key Design Principles
+
+- **Separation of Concerns**: Components, logic, configuration, and types are separated
+- **Type Safety**: Comprehensive TypeScript types throughout
+- **Reusability**: Custom hooks for common patterns (window management, responsive design)
+- **Scalability**: Easy to add new windows, features, and configurations
+- **Maintainability**: Clear folder structure and naming conventions
+
+For detailed architecture documentation, see [ARCHITECTURE.md](./ARCHITECTURE.md).
+
+<br>
+<br>
+
 ## Setting-up and Installation
 ### Prerequisites
 - Node.js and npm installed
@@ -77,6 +107,15 @@ npm install
 ```bash
 npm run dev
 ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Project Structure
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed documentation on:
+- Folder structure and organization
+- Custom hooks usage
+- Adding new features
+- Best practices and conventions
 
 <br>
 <br>

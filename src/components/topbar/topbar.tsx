@@ -1,8 +1,8 @@
-import { FaBatteryFull, FaWifi } from "react-icons/fa";
-import { BsApple, BsBatteryFull } from "react-icons/bs";
-import { CiBatteryFull } from "react-icons/ci";
-import style from "./topbar.module.css";
 import { useEffect, useState } from "react";
+import { FaWifi } from "react-icons/fa";
+import { BsBatteryFull } from "react-icons/bs";
+import { USER_INFO } from "@/constants";
+import styles from "./topbar.module.css";
 
 export default function TopBar() {
   const [currentDate, setCurrentDate] = useState("");
@@ -32,30 +32,29 @@ export default function TopBar() {
   }, []);
 
   return (
-    <div className={style.topbar}>
-      <div className={style.left}>
+    <div className={styles.topbar}>
+      <div className={styles.left}>
         <img
           src="./logo-small.svg"
-          alt="DS"
+          alt={USER_INFO.name}
           width={16}
-          className={style.logo}
+          className={styles.logo}
         />
         <p>
-          {" "}
-          <strong>Dhruv Shah</strong>{" "}
+          <strong>{USER_INFO.name}</strong>
         </p>
       </div>
-      <div className={style.right}>
-        <div className={style.iconGroup}>
-          <p className={style.iconText}>100%</p>
-          <BsBatteryFull className={style.batteryIcon} />
+      <div className={styles.right}>
+        <div className={styles.iconGroup}>
+          <p className={styles.iconText}>100%</p>
+          <BsBatteryFull className={styles.batteryIcon} />
         </div>
-        <div className={style.iconGroup}>
-          <FaWifi className={style.wifiIcon} />
+        <div className={styles.iconGroup}>
+          <FaWifi className={styles.wifiIcon} />
         </div>
-        <div className={style.iconGroup}>
-          <p className={style.date}>{currentDate}</p>
-          <p className={style.time}>{currentTime}</p>
+        <div className={styles.iconGroup}>
+          <p className={styles.date}>{currentDate}</p>
+          <p className={styles.time}>{currentTime}</p>
         </div>
       </div>
     </div>

@@ -1,80 +1,47 @@
-import "./dock.css"; // Ensure you have a separate CSS file for the dock styles
+import { DockActions } from "@/types";
+import { dockIcons } from "@/config/dockConfig";
+import { getIconPath } from "@/utils/windowHelpers";
+import styles from "./dock.module.css";
 
 interface DockProps {
-  actions: { [key: string]: () => void };
+  actions: DockActions;
 }
 
 export default function Dock({ actions }: DockProps) {
-  const icons = [
-    {
-      name: "chrome",
-      displayName: "Chrome",
-      onClick: () => {
-        actions["chrome"]();
-      },
-    },
-    {
-      name: "docker",
-      displayName: "Docker",
-      onClick: () => {}, // No action for now
-    },
-    {
-      name: "iterm",
-      displayName: "iTerm",
-      onClick: () => {
-        actions["terminal"]();
-      },
-    },
-    {
-      name: "slack",
-      displayName: "Slack",
-      onClick: () => {}, // No action for now
-    },
-    {
-      name: "textedit",
-      displayName: "TextEdit",
-      onClick: () => {}, // No action for now
-    },
-    {
-      name: "vscode",
-      displayName: "VSCode",
-      onClick: () => {
-        actions["vscode"]();
-      },
-    },
-    {
-      name: "github",
-      displayName: "GitHub",
-      onClick: () => window.open("https://github.com/Dhruv9449", "_blank"),
-    },
-    {
-      name: "linkedin",
-      displayName: "LinkedIn",
-      onClick: () =>
-        window.open("https://www.linkedin.com/in/dhruv9449/", "_blank"),
-    },
-    {
-      name: "mail",
-      displayName: "Mail",
-      onClick: () => (window.location.href = "mailto:dhruvshahrds@gmail.com"),
-    },
-    {
-      name: "contact",
-      displayName: "Contact",
-      onClick: () => {}, // No action for now
-    },
-  ];
+  const handleIconClick = (iconConfig: (typeof dockIcons)[0]) => {
+    // Handle action-based clicks
+    if (iconConfig.action && actions[iconConfig.action]) {
+      actions[iconConfig.action]();
+      return;
+    }
+
+    // Handle external link clicks
+    if (iconConfig.externalLink) {
+      if (iconConfig.externalLink.startsWith("mailto:")) {
+        window.location.href = iconConfig.externalLink;
+      } else {
+        window.open(iconConfig.externalLink, "_blank");
+      }
+      return;
+    }
+
+    // No action defined - do nothing
+  };
 
   return (
-    <div className="dock">
-      {icons.map((icon, index) => (
-        <div className="dock-icon" key={index} onClick={icon.onClick}>
+    <div className={styles.dock}>
+      {dockIcons.map((icon, index) => (
+        <div
+          className={styles.dockIcon}
+          key={`${icon.name}-${index}`}
+          onClick={() => handleIconClick(icon)}
+        >
           <img
-            src={`./icons/${icon.name}.png`}
-            alt={icon.name}
-            className="icon-image"
+            src={getIconPath(icon.name)}
+            alt={icon.displayName}
+            className={styles.iconImage}
           />
-          <div className="tooltip">{icon.displayName}</div>
+          <div className={styles.tooltip}>{icon.displayName}</div>
         </div>
       ))}
     </div>

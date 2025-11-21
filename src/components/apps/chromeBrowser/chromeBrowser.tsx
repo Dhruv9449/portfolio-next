@@ -1,55 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
-import styles from "./chromeBrowser.module.css";
-import { BsBing, BsGithub, BsLinkedin, BsYoutube } from "react-icons/bs";
 import { IoMdArrowBack, IoMdArrowForward, IoMdRefresh } from "react-icons/io";
+import { Tab, BaseWindowProps } from "@/types";
+import { browserFavorites } from "@/config/browserConfig";
+import { DEFAULT_TAB, API_ENDPOINTS } from "@/constants";
+import { normalizeUrl, getMaximizedSize } from "@/utils/windowHelpers";
+import styles from "./chromeBrowser.module.css";
 
-interface Tab {
-  name: string;
-  url: string;
-  favicon: string;
-}
+const initialTabs: Tab[] = [DEFAULT_TAB];
 
-const initialTabs: Tab[] = [
-  {
-    name: "New Tab",
-    url: "",
-    favicon: "https://www.google.com/chrome/static/images/chrome-logo.svg",
-  },
-];
-
-const favorites = [
-  {
-    name: "Bing",
-    url: "https://www.bing.com/search?q=Dhruv9449",
-    icon: <BsBing />,
-    windowRedirect: false,
-  },
-  {
-    name: "GitHub",
-    url: "https://github.com/Dhruv9449",
-    icon: <BsGithub />,
-    windowRedirect: true,
-  },
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/dhruv9449/",
-    icon: <BsLinkedin />,
-    windowRedirect: true,
-  },
-  {
-    name: "YouTube",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    icon: <BsYoutube />,
-    windowRedirect: true,
-  },
-];
-
-interface ChromeBrowserProps {
-  defaultPosition: { x: number; y: number };
-  hideTopbarAndDock: (hide: boolean) => void;
-  onClose: () => void;
-}
+interface ChromeBrowserProps extends BaseWindowProps {}
 
 export default function ChromeBrowser({
   defaultPosition,
@@ -68,12 +28,14 @@ export default function ChromeBrowser({
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   useEffect(() => {
-    if (tabs.length === 0) onClose();
-  }, [tabs, onClose]);
+    if (tabs.length === 0) handleClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabs]);
 
   useEffect(() => {
     // Fetch metadata when the URL changes in the active tab
     updateTabTitle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iframeKey]);
 
   const handleTabClick = (index: number) => {
@@ -85,23 +47,18 @@ export default function ChromeBrowser({
   const toggleMaximize = () => {
     if (isMaximized) {
       hideTopbarAndDock(false);
-      setSize({ width: 800, height: 500 });
+      setSize({ width: 1000, height: 600 });
       setPosition(defaultPosition);
     } else {
       hideTopbarAndDock(true);
-      setSize({ width: window.innerWidth, height: window.innerHeight });
+      setSize(getMaximizedSize());
       setPosition({ x: 0, y: 0 });
     }
     setIsMaximized(!isMaximized);
   };
 
   const addTab = () => {
-    const newTab = {
-      name: "New Tab",
-      url: "",
-      favicon: "https://www.google.com/chrome/static/images/chrome-logo.svg",
-    };
-    setTabs([...tabs, newTab]);
+    setTabs([...tabs, DEFAULT_TAB]);
     setActiveTab(tabs.length);
     setUrlInput("");
     setShowHomeScreen(true);
@@ -109,7 +66,7 @@ export default function ChromeBrowser({
 
   const closeTab = (index: number) => {
     if (tabs.length === 1) {
-      onClose();
+      handleClose();
       return;
     }
     const newTabs = tabs.filter((_, i) => i !== index);
@@ -119,25 +76,25 @@ export default function ChromeBrowser({
     setShowHomeScreen(newTabs[activeTab]?.url === "");
   };
 
+  const handleClose = () => {
+    // Reset topbar and dock visibility when closing
+    if (isMaximized) {
+      hideTopbarAndDock(false);
+    }
+    onClose();
+  };
+
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrlInput(e.target.value);
   };
 
   const navigateToUrl = () => {
-    // If Url input doesn't start with http or https, add https://
-    let url = urlInput;
-    if (!url.match(/^https?:\/\//i) && url !== "") {
-      url = `https://${url}`;
-    }
+    const url = normalizeUrl(urlInput);
     setUrlInput(url);
     const updatedTabs = [...tabs];
     updatedTabs[activeTab].url = url;
     setTabs(updatedTabs);
-    if (urlInput === "") {
-      setShowHomeScreen(true);
-    } else {
-      setShowHomeScreen(false);
-    }
+    setShowHomeScreen(urlInput === "");
     setIframeKey(Date.now());
   };
 
@@ -155,12 +112,8 @@ export default function ChromeBrowser({
   };
 
   const goBack = () => {
-    // setShowHomeScreen(true);
     setUrlInput("");
     navigateToUrl();
-    // const updatedTabs = [...tabs];
-    // updatedTabs[activeTab].url = "";
-    // setTabs(updatedTabs);
   };
 
   const updateTabTitle = () => {
@@ -175,14 +128,14 @@ export default function ChromeBrowser({
     }
 
     // Fetch metadata for title and favicon
-    fetch(`https://api.microlink.io?url=${url}`)
+    fetch(`${API_ENDPOINTS.metadata}?url=${url}`)
       .then((response) => response.json())
       .then((data) => {
         const updatedTabs = [...tabs];
         updatedTabs[activeTab] = {
           ...updatedTabs[activeTab],
-          name: data.data.title || "New Tab",
-          favicon: data.data.logo?.url || initialTabs[0].favicon, // Fallback to default favicon
+          name: data.data.title || DEFAULT_TAB.name,
+          favicon: data.data.logo?.url || DEFAULT_TAB.favicon,
         };
         setTabs(updatedTabs);
       })
@@ -192,20 +145,25 @@ export default function ChromeBrowser({
   function BrowserHomeScreen() {
     return (
       <div className={styles.homeScreen}>
-        {favorites.map((fav, index) => (
-          <button
-            key={index}
-            className={styles.favoriteButton}
-            onClick={() =>
-              fav.windowRedirect
-                ? window.open(fav.url)
-                : handleFavoriteClick(fav.url)
-            }
-          >
-            <div className={styles.favoriteIcon}>{fav.icon}</div>
-            <div className={styles.favoriteName}>{fav.name}</div>
-          </button>
-        ))}
+        {browserFavorites.map((fav, index) => {
+          const IconComponent = fav.IconComponent;
+          return (
+            <button
+              key={`favorite-${index}`}
+              className={styles.favoriteButton}
+              onClick={() =>
+                fav.windowRedirect
+                  ? window.open(fav.url)
+                  : handleFavoriteClick(fav.url)
+              }
+            >
+              <div className={styles.favoriteIcon}>
+                <IconComponent />
+              </div>
+              <div className={styles.favoriteName}>{fav.name}</div>
+            </button>
+          );
+        })}
       </div>
     );
   }
@@ -239,7 +197,10 @@ export default function ChromeBrowser({
       <div className={styles.chromeBrowser}>
         <div className={styles.chromeHeader}>
           <div className={styles.windowButtons}>
-            <button className={styles.closeButton} onClick={onClose}></button>
+            <button
+              className={styles.closeButton}
+              onClick={handleClose}
+            ></button>
             <button className={styles.minimizeButton}></button>
             <button
               className={styles.maximizeButton}

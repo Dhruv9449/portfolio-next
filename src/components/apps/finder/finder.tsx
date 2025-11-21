@@ -1,27 +1,14 @@
-import styles from "./finder.module.css";
 import { useState } from "react";
+import { Rnd } from "react-rnd";
 import { IoFolderOutline } from "react-icons/io5";
 import { CiHardDrive } from "react-icons/ci";
-import experienceData from "../../../data/experienceData.json";
-import projectsData from "../../../data/projectData.json";
-import schoolData from "../../../data/schoolData.json";
-import skillsData from "../../../data/skillsData.json";
-import { Rnd } from "react-rnd";
-
-// Typing for the iconData prop
-interface IconData {
-  name: string;
-  displayName: string;
-  fileType: string;
-}
-
-interface SkillData {
-  name: string;
-  displayName: string;
-  icon: string;
-  category: string;
-  link: string;
-}
+import { IconData, SkillData, SkillsByCategory } from "@/types";
+import { getMaximizedSize } from "@/utils/windowHelpers";
+import experienceData from "@/data/experienceData.json";
+import projectsData from "@/data/projectData.json";
+import schoolData from "@/data/schoolData.json";
+import skillsData from "@/data/skillsData.json";
+import styles from "./finder.module.css";
 
 interface FinderProps {
   title: string;
@@ -56,14 +43,8 @@ export default function Finder({
 
   // Function to get the contents of the active folder
   const getCurrentFolderContents = ():
-    | Array<{
-        name: string;
-        displayName: string;
-        icon: string;
-        category?: string;
-        link?: string;
-      }>
-    | { [key: string]: SkillData[] } => {
+    | Array<{ name: string; displayName: string; icon: string }>
+    | SkillsByCategory => {
     switch (activeFolder) {
       case "Experience":
         return experienceData;
@@ -72,18 +53,18 @@ export default function Finder({
       case "School":
         return schoolData;
       case "Skills":
-        return skillsData.reduce(
-          (acc: { [key: string]: SkillData[] }, skill: SkillData) => {
+        return (skillsData as SkillData[]).reduce(
+          (acc: SkillsByCategory, skill: SkillData) => {
             if (!acc[skill.category]) {
               acc[skill.category] = [];
             }
             acc[skill.category].push(skill);
             return acc;
           },
-          {} as { [key: string]: SkillData[] }
+          {} as SkillsByCategory
         );
       default:
-        return [] as Array<{ name: string; displayName: string; icon: string }>;
+        return [];
     }
   };
 
@@ -96,10 +77,18 @@ export default function Finder({
       setPosition(defaultPosition);
     } else {
       hideTopbarAndDock(true);
-      setSize({ width: window.innerWidth, height: window.innerHeight });
+      setSize(getMaximizedSize());
       setPosition({ x: 0, y: 0 });
     }
     setIsMaximized(!isMaximized);
+  };
+
+  const handleClose = () => {
+    // Reset topbar and dock visibility when closing
+    if (isMaximized) {
+      hideTopbarAndDock(false);
+    }
+    onClose();
   };
 
   return (
@@ -136,7 +125,7 @@ export default function Finder({
               <div className={styles.windowButtons}>
                 <button
                   className={styles.closeButton}
-                  onClick={onClose}
+                  onClick={handleClose}
                 ></button>
                 <button className={styles.minimizeButton}></button>
                 <button
@@ -185,71 +174,63 @@ export default function Finder({
             </div>
             <div className={styles.finderBody}>
               {activeFolder === "Skills" ? (
-                Object.entries(
-                  folderContents as {
-                    [key: string]: SkillData[];
-                  }
-                ).map(([category, skills], index) => (
-                  <div key={index} className={styles.categorySection}>
-                    <h6 className={styles.categoryTitle}>{category}</h6>
-                    <div className={styles.iconGrid}>
-                      {skills.map((skill, skillIndex) => (
-                        <div
-                          key={skillIndex}
-                          className={styles.iconItem}
-                          onClick={() =>
-                            skill.link
-                              ? window.open(skill.link, "_blank")
-                              : null
-                          }
-                        >
-                          <img
-                            src={skill.icon}
-                            alt={skill.displayName}
-                            className={`${styles.iconImage} ${styles.toolIcon}`}
-                          />
-                          <div className={styles.iconLabel}>
-                            {skill.displayName}
+                Object.entries(folderContents as SkillsByCategory).map(
+                  ([category, skills], index) => (
+                    <div
+                      key={`category-${index}`}
+                      className={styles.categorySection}
+                    >
+                      <h6 className={styles.categoryTitle}>{category}</h6>
+                      <div className={styles.iconGrid}>
+                        {skills.map((skill, skillIndex) => (
+                          <div
+                            key={`skill-${skill.name}-${skillIndex}`}
+                            className={styles.iconItem}
+                            onClick={() =>
+                              skill.link
+                                ? window.open(skill.link, "_blank")
+                                : null
+                            }
+                          >
+                            <img
+                              src={skill.icon}
+                              alt={skill.displayName}
+                              className={`${styles.iconImage} ${styles.toolIcon}`}
+                            />
+                            <div className={styles.iconLabel}>
+                              {skill.displayName}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))
+                  )
+                )
               ) : (
                 <div className={styles.iconGrid}>
                   {Array.isArray(folderContents) &&
-                    folderContents.map(
-                      (
-                        icon: {
-                          name: string;
-                          displayName: string;
-                          icon: string;
-                        },
-                        index: number
-                      ) => (
-                        <div
-                          key={index}
-                          className={styles.iconItem}
-                          onClick={() =>
-                            openFileWindow(
-                              icon.displayName,
-                              icon.name,
-                              activeFolder
-                            )
-                          }
-                        >
-                          <img
-                            src={icon.icon}
-                            alt={icon.displayName}
-                            className={styles.iconImage}
-                          />
-                          <div className={styles.iconLabel}>
-                            {icon.displayName}
-                          </div>
+                    folderContents.map((icon, index) => (
+                      <div
+                        key={`icon-${icon.name}-${index}`}
+                        className={styles.iconItem}
+                        onClick={() =>
+                          openFileWindow(
+                            icon.displayName,
+                            icon.name,
+                            activeFolder
+                          )
+                        }
+                      >
+                        <img
+                          src={icon.icon}
+                          alt={icon.displayName}
+                          className={styles.iconImage}
+                        />
+                        <div className={styles.iconLabel}>
+                          {icon.displayName}
                         </div>
-                      )
-                    )}
+                      </div>
+                    ))}
                 </div>
               )}
             </div>

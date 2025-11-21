@@ -1,0 +1,59 @@
+.dock {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) brightness(0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.241);
+  padding: 5px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  border-radius: 20px;
+}
+
+.dockIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.dockIcon:hover {
+  transform: translateY(-10px);
+}
+
+.iconImage {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(47, 47, 47, 0.662);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.dockIcon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+

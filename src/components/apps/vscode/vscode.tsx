@@ -1,12 +1,10 @@
-import { use, useEffect, useState } from "react";
-import styles from "./vscode.module.css";
+import { useState } from "react";
 import { Rnd } from "react-rnd";
+import { BaseWindowProps } from "@/types";
+import { getMaximizedSize } from "@/utils/windowHelpers";
+import styles from "./vscode.module.css";
 
-interface VSCodeProps {
-  defaultPosition: { x: number; y: number };
-  hideTopbarAndDock: (hide: boolean) => void;
-  onClose: () => void;
-}
+interface VSCodeProps extends BaseWindowProps {}
 
 export default function VSCode({
   defaultPosition,
@@ -20,14 +18,22 @@ export default function VSCode({
   const toggleMaximize = () => {
     if (isMaximized) {
       hideTopbarAndDock(false);
-      setSize({ width: 800, height: 500 });
+      setSize({ width: 1000, height: 700 });
       setPosition(defaultPosition);
     } else {
       hideTopbarAndDock(true);
-      setSize({ width: window.innerWidth, height: window.innerHeight });
+      setSize(getMaximizedSize());
       setPosition({ x: 0, y: 0 });
     }
     setIsMaximized(!isMaximized);
+  };
+
+  const handleClose = () => {
+    // Reset topbar and dock visibility when closing
+    if (isMaximized) {
+      hideTopbarAndDock(false);
+    }
+    onClose();
   };
 
   return (
@@ -59,7 +65,10 @@ export default function VSCode({
       <div className={styles.window}>
         <div className={styles.windowHeader + " draggableHandle"}>
           <div className={styles.windowButtons}>
-            <button className={styles.closeButton} onClick={onClose}></button>
+            <button
+              className={styles.closeButton}
+              onClick={handleClose}
+            ></button>
             <button className={styles.minimizeButton}></button>
             <button
               className={styles.maximizeButton}

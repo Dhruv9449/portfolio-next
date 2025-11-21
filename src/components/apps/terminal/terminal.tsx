@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import styles from "./terminal.module.css";
 import { Rnd } from "react-rnd";
-import test from "node:test";
+import { BaseWindowProps } from "@/types";
+import { getMaximizedSize } from "@/utils/windowHelpers";
+import styles from "./terminal.module.css";
 
 // Define types for the file system
 type File = {
@@ -49,11 +50,7 @@ const fileSystem: FileSystem = {
 // Helper function to format prompt path
 const formatPromptPath = (path: string): string => path.replace(/^~\/?/, "~");
 
-interface TerminalProps {
-  defaultPosition: { x: number; y: number };
-  hideTopbarAndDock: (hide: boolean) => void;
-  onClose: () => void;
-}
+interface TerminalProps extends BaseWindowProps {}
 
 export default function Terminal({
   defaultPosition,
@@ -171,14 +168,22 @@ export default function Terminal({
   const toggleMaximize = () => {
     if (isMaximized) {
       hideTopbarAndDock(false);
-      setSize({ width: 800, height: 500 });
+      setSize({ width: 1000, height: 700 });
       setPosition(defaultPosition);
     } else {
       hideTopbarAndDock(true);
-      setSize({ width: window.innerWidth, height: window.innerHeight });
+      setSize(getMaximizedSize());
       setPosition({ x: 0, y: 0 });
     }
     setIsMaximized(!isMaximized);
+  };
+
+  const handleClose = () => {
+    // Reset topbar and dock visibility when closing
+    if (isMaximized) {
+      hideTopbarAndDock(false);
+    }
+    onClose();
   };
 
   // Updated helper function to format prompt path
@@ -215,7 +220,10 @@ export default function Terminal({
       <div className={styles.window}>
         <div className={`${styles.windowHeader} draggableHandle`}>
           <div className={styles.windowButtons}>
-            <button className={styles.closeButton} onClick={onClose}></button>
+            <button
+              className={styles.closeButton}
+              onClick={handleClose}
+            ></button>
             <button className={styles.minimizeButton}></button>
             <button
               className={styles.maximizeButton}

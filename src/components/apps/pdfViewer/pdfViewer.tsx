@@ -48,6 +48,14 @@ export default function PDFViewer({
     setIsMaximized(!isMaximized);
   };
 
+  const handleClose = () => {
+    // Reset topbar and dock visibility when closing
+    if (isMaximized) {
+      hideTopbarAndDock(false);
+    }
+    onClose();
+  };
+
   const zoomPluginInstance = zoomPlugin();
   const { ZoomIn, ZoomOut } = zoomPluginInstance;
   const pageNavigationPluginInstance = pageNavigationPlugin();
@@ -75,7 +83,7 @@ export default function PDFViewer({
       <div className={styles.pdfViewer}>
         <div className={styles.header}>
           <div className={styles.windowButtons}>
-            <button className={styles.closeButton} onClick={onClose} />
+            <button className={styles.closeButton} onClick={handleClose} />
             <button className={styles.minimizeButton} />
             <button
               className={styles.maximizeButton}

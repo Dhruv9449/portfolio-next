@@ -12,6 +12,7 @@ import AboutMe from "@/components/apps/aboutMe/aboutMe";
 import AboutMeCore from "@/components/apps/aboutMeCore/aboutMeCore";
 import Terminal from "@/components/apps/terminal/terminal";
 import VSCode from "@/components/apps/vscode/vscode";
+import Spotify from "@/components/apps/spotify/spotify";
 
 import { useWindowManager, useSingleWindow, useResponsive } from "@/hooks";
 import { FinderWindowConfig, FileWindowConfig, DockActions } from "@/types";
@@ -33,12 +34,14 @@ export default function Home() {
   const vscode = useSingleWindow(false);
   const pdfViewer = useSingleWindow(false);
   const aboutMe = useSingleWindow(true);
+  const spotify = useSingleWindow(false);
 
   // Dock actions configuration
   const dockActions: DockActions = {
     chrome: chromeBrowser.open,
     terminal: terminal.open,
     vscode: vscode.open,
+    spotify: spotify.open,
   };
 
   // Desktop icon double-click handler
@@ -134,6 +137,15 @@ export default function Home() {
           <VSCode
             defaultPosition={DEFAULT_WINDOW_POSITION}
             onClose={vscode.close}
+            hideTopbarAndDock={setHideTopbarAndDock}
+          />
+        )}
+
+        {/* Spotify */}
+        {spotify.isOpen && (
+          <Spotify
+            defaultPosition={DEFAULT_WINDOW_POSITION}
+            onClose={spotify.close}
             hideTopbarAndDock={setHideTopbarAndDock}
           />
         )}

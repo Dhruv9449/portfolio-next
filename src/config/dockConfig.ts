@@ -18,6 +18,11 @@ export const dockIcons: DockIconConfig[] = [
     action: "chrome",
   },
   {
+    name: "spotify",
+    displayName: "Spotify",
+    action: "spotify",
+  },
+  {
     name: "docker",
     displayName: "Docker",
   },

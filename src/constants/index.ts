@@ -9,10 +9,6 @@ export const DEFAULT_WINDOW_POSITION = { x: 100, y: 100 };
 // Window sizes
 export const DEFAULT_FINDER_SIZE = { width: 800, height: 500 };
 export const DEFAULT_BROWSER_SIZE = { width: 1000, height: 600 };
-export const MAXIMIZED_WINDOW_SIZE = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-};
 
 // Responsive breakpoints
 export const MOBILE_WIDTH_BREAKPOINT = 500;

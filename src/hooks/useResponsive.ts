@@ -6,7 +6,7 @@ import { MOBILE_WIDTH_BREAKPOINT, MOBILE_HEIGHT_BREAKPOINT } from "@/constants";
  * Hook to detect if the current device is mobile
  */
 export function useResponsive() {
-  const [isMobile, setIsMobile] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {

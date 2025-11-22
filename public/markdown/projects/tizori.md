@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/fctXvHt.png" width="120" height="120" />
+<img src="../../icons/projects/tizori.png" width="120" />
 
 # Tizori
 

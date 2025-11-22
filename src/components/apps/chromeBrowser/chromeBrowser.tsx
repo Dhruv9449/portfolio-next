@@ -15,6 +15,8 @@ export default function ChromeBrowser({
   defaultPosition,
   hideTopbarAndDock,
   onClose,
+  zIndex = 1000,
+  onFocus,
 }: ChromeBrowserProps) {
   const [tabs, setTabs] = useState(initialTabs);
   const [activeTab, setActiveTab] = useState(0);
@@ -193,6 +195,8 @@ export default function ChromeBrowser({
         setPosition({ x: d.x, y: d.y });
       }}
       dragHandleClassName={styles.chromeHeader}
+      style={{ zIndex }}
+      onMouseDown={onFocus}
     >
       <div className={styles.chromeBrowser}>
         <div className={styles.chromeHeader}>

@@ -7,12 +7,16 @@ interface AboutMeProps {
   defaultPosition: { x: number; y: number };
   hideTopbarAndDock: (hide: boolean) => void;
   onClose: () => void;
+  zIndex?: number;
+  onFocus?: () => void;
 }
 
 export default function AboutMe({
   defaultPosition,
   hideTopbarAndDock,
   onClose,
+  zIndex = 1000,
+  onFocus,
 }: AboutMeProps) {
   const [isMaximized, setIsMaximized] = useState(false);
   const [size, setSize] = useState({ width: 1000, height: 600 });
@@ -64,6 +68,8 @@ export default function AboutMe({
         setPosition({ x: d.x, y: d.y });
       }}
       dragHandleClassName="draggableHandle"
+      style={{ zIndex }}
+      onMouseDown={onFocus}
     >
       <div className={styles.window}>
         <div className={styles.windowHeader + " draggableHandle"}>

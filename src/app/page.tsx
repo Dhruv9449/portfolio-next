@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TopBar from "@/components/topbar/topbar";
 import Dock from "@/components/dock/dock";
 import DesktopIcon from "@/components/desktopIcon/desktopIcon";
@@ -28,6 +28,36 @@ export default function Home() {
   const [hideTopbarAndDock, setHideTopbarAndDock] = useState(false);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
 
+  // Global z-index management for all windows
+  const [highestZIndex, setHighestZIndex] = useState(1000);
+  const [singleWindowZIndexes, setSingleWindowZIndexes] = useState<{
+    [key: string]: number;
+  }>({
+    chrome: 1000,
+    terminal: 1000,
+    vscode: 1000,
+    pdfViewer: 1000,
+    aboutMe: 1001,
+    spotify: 1000,
+  });
+
+  const bringToFront = useCallback(
+    (windowId: string, isSingleWindow: boolean = false) => {
+      const newZIndex = highestZIndex + 1;
+      setHighestZIndex(newZIndex);
+
+      if (isSingleWindow) {
+        setSingleWindowZIndexes((prev) => ({
+          ...prev,
+          [windowId]: newZIndex,
+        }));
+      }
+
+      return newZIndex;
+    },
+    [highestZIndex]
+  );
+
   // Window management using custom hooks
   const finderWindowManager = useWindowManager<FinderWindowConfig>();
   const fileWindowManager = useWindowManager<FileWindowConfig>();
@@ -54,30 +84,55 @@ export default function Home() {
 
   // Dock actions configuration
   const dockActions: DockActions = {
-    chrome: chromeBrowser.open,
-    terminal: terminal.open,
-    vscode: vscode.open,
-    spotify: spotify.open,
+    chrome: () => {
+      bringToFront("chrome", true);
+      chromeBrowser.open();
+    },
+    terminal: () => {
+      bringToFront("terminal", true);
+      terminal.open();
+    },
+    vscode: () => {
+      bringToFront("vscode", true);
+      vscode.open();
+    },
+    spotify: () => {
+      bringToFront("spotify", true);
+      spotify.open();
+    },
   };
 
   // Desktop icon double-click handler
   const handleIconDoubleClick = (icon: (typeof desktopIcons)[0]) => {
     switch (icon.application) {
       case "finder":
-        finderWindowManager.openWindow({
-          name: icon.name,
-          displayName: icon.displayName,
-        });
+        const newZIndex = highestZIndex + 1;
+        setHighestZIndex(newZIndex);
+        finderWindowManager.openWindow(
+          {
+            name: icon.name,
+            displayName: icon.displayName,
+          },
+          undefined,
+          newZIndex
+        );
         break;
       case "pdfPreview":
+        const pdfZIndex = bringToFront("pdfViewer", true);
         pdfViewer.open();
         break;
       default:
-        fileWindowManager.openWindow({
-          title: icon.displayName,
-          name: icon.name,
-          directory: icon.name,
-        });
+        const fileZIndex = highestZIndex + 1;
+        setHighestZIndex(fileZIndex);
+        fileWindowManager.openWindow(
+          {
+            title: icon.displayName,
+            name: icon.name,
+            directory: icon.name,
+          },
+          undefined,
+          fileZIndex
+        );
         break;
     }
   };
@@ -88,25 +143,36 @@ export default function Home() {
     name: string,
     directory: string
   ) => {
-    fileWindowManager.openWindow({ title, name, directory });
+    const newZIndex = highestZIndex + 1;
+    setHighestZIndex(newZIndex);
+    fileWindowManager.openWindow(
+      { title, name, directory },
+      undefined,
+      newZIndex
+    );
   };
 
   // Spotlight handlers
   const handleSpotlightOpenApp = (appName: string) => {
     switch (appName) {
       case "chrome":
+        bringToFront("chrome", true);
         chromeBrowser.open();
         break;
       case "terminal":
+        bringToFront("terminal", true);
         terminal.open();
         break;
       case "vscode":
+        bringToFront("vscode", true);
         vscode.open();
         break;
       case "spotify":
+        bringToFront("spotify", true);
         spotify.open();
         break;
       case "pdfViewer":
+        bringToFront("pdfViewer", true);
         pdfViewer.open();
         break;
       default:
@@ -119,6 +185,9 @@ export default function Home() {
     name: string,
     directory: string
   ) => {
+    const newZIndex = highestZIndex + 1;
+    setHighestZIndex(newZIndex);
+
     if (
       directory === "experience" ||
       directory === "projects" ||
@@ -126,13 +195,21 @@ export default function Home() {
       directory === "skills"
     ) {
       // Open finder window
-      finderWindowManager.openWindow({
-        name: directory,
-        displayName: title,
-      });
+      finderWindowManager.openWindow(
+        {
+          name: directory,
+          displayName: title,
+        },
+        undefined,
+        newZIndex
+      );
     } else {
       // Open file window
-      fileWindowManager.openWindow({ title, name, directory });
+      fileWindowManager.openWindow(
+        { title, name, directory },
+        undefined,
+        newZIndex
+      );
     }
   };
 
@@ -180,6 +257,11 @@ export default function Home() {
             defaultPosition={window.defaultPosition}
             hideTopbarAndDock={setHideTopbarAndDock}
             openFileWindow={handleOpenFileWindow}
+            zIndex={window.zIndex}
+            onFocus={() => {
+              const newZIndex = bringToFront(window.id, false);
+              finderWindowManager.updateWindowZIndex(window.id, newZIndex);
+            }}
           />
         ))}
 
@@ -189,6 +271,8 @@ export default function Home() {
             defaultPosition={DEFAULT_WINDOW_POSITION}
             onClose={chromeBrowser.close}
             hideTopbarAndDock={setHideTopbarAndDock}
+            zIndex={singleWindowZIndexes.chrome}
+            onFocus={() => bringToFront("chrome", true)}
           />
         )}
 
@@ -198,6 +282,8 @@ export default function Home() {
             defaultPosition={DEFAULT_WINDOW_POSITION}
             onClose={terminal.close}
             hideTopbarAndDock={setHideTopbarAndDock}
+            zIndex={singleWindowZIndexes.terminal}
+            onFocus={() => bringToFront("terminal", true)}
           />
         )}
 
@@ -207,6 +293,8 @@ export default function Home() {
             defaultPosition={DEFAULT_WINDOW_POSITION}
             onClose={vscode.close}
             hideTopbarAndDock={setHideTopbarAndDock}
+            zIndex={singleWindowZIndexes.vscode}
+            onFocus={() => bringToFront("vscode", true)}
           />
         )}
 
@@ -216,6 +304,8 @@ export default function Home() {
             defaultPosition={DEFAULT_WINDOW_POSITION}
             onClose={spotify.close}
             hideTopbarAndDock={setHideTopbarAndDock}
+            zIndex={singleWindowZIndexes.spotify}
+            onFocus={() => bringToFront("spotify", true)}
           />
         )}
 
@@ -226,6 +316,8 @@ export default function Home() {
             onClose={pdfViewer.close}
             hideTopbarAndDock={setHideTopbarAndDock}
             file="Resume.pdf"
+            zIndex={singleWindowZIndexes.pdfViewer}
+            onFocus={() => bringToFront("pdfViewer", true)}
           />
         )}
 
@@ -235,6 +327,8 @@ export default function Home() {
             defaultPosition={{ x: 250, y: 10 }}
             hideTopbarAndDock={setHideTopbarAndDock}
             onClose={aboutMe.close}
+            zIndex={singleWindowZIndexes.aboutMe}
+            onFocus={() => bringToFront("aboutMe", true)}
           />
         )}
 
@@ -250,6 +344,11 @@ export default function Home() {
             defaultPosition={window.defaultPosition}
             hideTopbarAndDock={setHideTopbarAndDock}
             onClose={() => fileWindowManager.closeWindow(window.id)}
+            zIndex={window.zIndex}
+            onFocus={() => {
+              const newZIndex = bringToFront(window.id, false);
+              fileWindowManager.updateWindowZIndex(window.id, newZIndex);
+            }}
           />
         ))}
       </div>

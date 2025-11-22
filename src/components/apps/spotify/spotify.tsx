@@ -48,6 +48,8 @@ export default function Spotify({
   defaultPosition,
   hideTopbarAndDock,
   onClose,
+  zIndex = 1000,
+  onFocus,
 }: SpotifyProps) {
   const [isMaximized, setIsMaximized] = useState(false);
   const [size, setSize] = useState({ width: 1200, height: 800 });
@@ -469,6 +471,8 @@ export default function Spotify({
         setPosition({ x: d.x, y: d.y });
       }}
       dragHandleClassName="draggableHandle"
+      style={{ zIndex }}
+      onMouseDown={onFocus}
     >
       <div className={styles.window}>
         <div className={`${styles.windowHeader} draggableHandle`}>

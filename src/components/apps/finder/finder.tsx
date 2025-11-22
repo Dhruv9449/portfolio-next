@@ -18,6 +18,8 @@ interface FinderProps {
   defaultPosition: { x: number; y: number };
   hideTopbarAndDock: (hide: boolean) => void;
   openFileWindow: (name: string, title: string, directory: string) => void;
+  zIndex?: number;
+  onFocus?: () => void;
 }
 
 export default function Finder({
@@ -28,6 +30,8 @@ export default function Finder({
   defaultPosition,
   hideTopbarAndDock,
   openFileWindow,
+  zIndex = 1000,
+  onFocus,
 }: FinderProps) {
   const [activeFolder, setActiveFolder] = useState(currFolder);
   const [isMaximized, setIsMaximized] = useState(false);
@@ -117,6 +121,8 @@ export default function Finder({
         setPosition({ x: d.x, y: d.y });
       }}
       dragHandleClassName="draggableHandle"
+      style={{ zIndex }}
+      onMouseDown={onFocus}
     >
       <div className={styles.finderWindow}>
         <div className={styles.finderContent}>

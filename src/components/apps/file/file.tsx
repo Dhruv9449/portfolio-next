@@ -12,6 +12,8 @@ interface FileProps {
   defaultPosition: { x: number; y: number };
   hideTopbarAndDock: (hide: boolean) => void;
   onClose: () => void;
+  zIndex?: number;
+  onFocus?: () => void;
 }
 
 export default function File({
@@ -19,6 +21,8 @@ export default function File({
   defaultPosition,
   hideTopbarAndDock,
   onClose,
+  zIndex = 1000,
+  onFocus,
 }: FileProps) {
   const [isMaximized, setIsMaximized] = useState(false);
   const [size, setSize] = useState({ width: 1000, height: 700 });
@@ -90,6 +94,8 @@ export default function File({
         setPosition({ x: d.x, y: d.y });
       }}
       dragHandleClassName="draggableHandle"
+      style={{ zIndex }}
+      onMouseDown={onFocus}
     >
       <div className={styles.window}>
         <div className={styles.windowHeader + " draggableHandle"}>

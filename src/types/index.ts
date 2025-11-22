@@ -17,6 +17,7 @@ export interface WindowConfig {
   id: string;
   defaultPosition: Position;
   defaultSize?: Size;
+  zIndex?: number;
 }
 
 // Icon and File Types
@@ -76,6 +77,8 @@ export interface BaseWindowProps {
   defaultPosition: Position;
   onClose: () => void;
   hideTopbarAndDock: (hide: boolean) => void;
+  zIndex?: number;
+  onFocus?: () => void;
 }
 
 export interface FinderWindowConfig extends WindowConfig {

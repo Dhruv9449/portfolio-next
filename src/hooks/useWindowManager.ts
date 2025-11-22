@@ -12,8 +12,9 @@ export function useWindowManager<T extends WindowConfig>() {
 
   const openWindow = useCallback(
     (
-      windowData: Omit<T, "id" | "defaultPosition">,
-      basePosition = { x: 100, y: 100 }
+      windowData: Omit<T, "id" | "defaultPosition" | "zIndex">,
+      basePosition = { x: 100, y: 100 },
+      zIndex?: number
     ) => {
       const newWindow = {
         ...windowData,
@@ -23,8 +24,10 @@ export function useWindowManager<T extends WindowConfig>() {
           WINDOW_OFFSET,
           basePosition
         ),
+        zIndex: zIndex || 1000,
       } as T;
       setWindows((prev) => [...prev, newWindow]);
+      return newWindow.id;
     },
     [windows.length]
   );
@@ -37,10 +40,19 @@ export function useWindowManager<T extends WindowConfig>() {
     setWindows([]);
   }, []);
 
+  const updateWindowZIndex = useCallback((id: string, zIndex: number) => {
+    setWindows((prev) =>
+      prev.map((window) =>
+        window.id === id ? ({ ...window, zIndex } as T) : window
+      )
+    );
+  }, []);
+
   return {
     windows,
     openWindow,
     closeWindow,
     closeAllWindows,
+    updateWindowZIndex,
   };
 }

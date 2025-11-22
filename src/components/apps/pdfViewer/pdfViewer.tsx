@@ -23,6 +23,8 @@ interface PDFViewerProps {
   defaultPosition: { x: number; y: number };
   hideTopbarAndDock: (hide: boolean) => void;
   onClose: () => void;
+  zIndex?: number;
+  onFocus?: () => void;
 }
 
 export default function PDFViewer({
@@ -30,6 +32,8 @@ export default function PDFViewer({
   defaultPosition,
   hideTopbarAndDock,
   onClose,
+  zIndex = 1000,
+  onFocus,
 }: PDFViewerProps) {
   const [isMaximized, setIsMaximized] = useState(false);
   const [size, setSize] = useState({ width: 800, height: 600 });
@@ -79,6 +83,8 @@ export default function PDFViewer({
         setPosition({ x: d.x, y: d.y });
       }}
       dragHandleClassName={styles.centerHeader}
+      style={{ zIndex }}
+      onMouseDown={onFocus}
     >
       <div className={styles.pdfViewer}>
         <div className={styles.header}>

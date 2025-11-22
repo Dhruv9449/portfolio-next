@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TopBar from "@/components/topbar/topbar";
 import Dock from "@/components/dock/dock";
 import DesktopIcon from "@/components/desktopIcon/desktopIcon";
@@ -13,6 +13,7 @@ import AboutMeCore from "@/components/apps/aboutMeCore/aboutMeCore";
 import Terminal from "@/components/apps/terminal/terminal";
 import VSCode from "@/components/apps/vscode/vscode";
 import Spotify from "@/components/apps/spotify/spotify";
+import Spotlight from "@/components/spotlight/spotlight";
 
 import { useWindowManager, useSingleWindow, useResponsive } from "@/hooks";
 import { FinderWindowConfig, FileWindowConfig, DockActions } from "@/types";
@@ -25,6 +26,7 @@ import styles from "./page.module.css";
 export default function Home() {
   const { isMobile } = useResponsive();
   const [hideTopbarAndDock, setHideTopbarAndDock] = useState(false);
+  const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
 
   // Window management using custom hooks
   const finderWindowManager = useWindowManager<FinderWindowConfig>();
@@ -35,6 +37,20 @@ export default function Home() {
   const pdfViewer = useSingleWindow(false);
   const aboutMe = useSingleWindow(true);
   const spotify = useSingleWindow(false);
+
+  // Keyboard shortcuts for Spotlight
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd+K or Cmd+Space
+      if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === " ")) {
+        e.preventDefault();
+        setIsSpotlightOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // Dock actions configuration
   const dockActions: DockActions = {
@@ -75,6 +91,51 @@ export default function Home() {
     fileWindowManager.openWindow({ title, name, directory });
   };
 
+  // Spotlight handlers
+  const handleSpotlightOpenApp = (appName: string) => {
+    switch (appName) {
+      case "chrome":
+        chromeBrowser.open();
+        break;
+      case "terminal":
+        terminal.open();
+        break;
+      case "vscode":
+        vscode.open();
+        break;
+      case "spotify":
+        spotify.open();
+        break;
+      case "pdfViewer":
+        pdfViewer.open();
+        break;
+      default:
+        console.log("Unknown app:", appName);
+    }
+  };
+
+  const handleSpotlightOpenFile = (
+    title: string,
+    name: string,
+    directory: string
+  ) => {
+    if (
+      directory === "experience" ||
+      directory === "projects" ||
+      directory === "school" ||
+      directory === "skills"
+    ) {
+      // Open finder window
+      finderWindowManager.openWindow({
+        name: directory,
+        displayName: title,
+      });
+    } else {
+      // Open file window
+      fileWindowManager.openWindow({ title, name, directory });
+    }
+  };
+
   // Render mobile view
   if (isMobile) {
     return <AboutMeCore />;
@@ -83,6 +144,14 @@ export default function Home() {
   // Render desktop view
   return (
     <main className={styles.main}>
+      {/* Spotlight Search */}
+      <Spotlight
+        isOpen={isSpotlightOpen}
+        onClose={() => setIsSpotlightOpen(false)}
+        onOpenApp={handleSpotlightOpenApp}
+        onOpenFile={handleSpotlightOpenFile}
+      />
+
       {!hideTopbarAndDock && <TopBar />}
 
       <div className={styles.desktop}>
